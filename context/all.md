@@ -429,7 +429,27 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.as-context-for-llm" title="Thorg Documentation As Context for LLM">
 	
-	TODO: Document how Thorg documentation is used as context for LLM.
+	This **[single file](https://raw.githubusercontent.com/Thorg-App/thorg-public-notes-context-for-llm/refs/heads/main/context/all.md)** from [this](https://github.com/Thorg-App/thorg-public-notes-context-for-llm) git repo contains all notes from [notes.thorg.app](https://notes.thorg.app), ready to add as LLM context.
+	
+	#### Individual files
+	<details class="bordered-when-open">
+	<summary>Individual files in public repo</summary>
+	
+	![[t.ext.as-context-for-llm.public-repo]]
+	</details>
+	
+</note>
+<note name="t.ext.as-context-for-llm.public-repo" title="Public Repo (with notes.thorg.app content)">
+	
+	<div class="centered xxlarge">
+	
+	**[thorg-public-notes](https://github.com/Thorg-App/thorg-public-notes)**
+	</div>
+	
+	**thorg-public-notes**: Repository that contains [[vault|t.ext.data.type.vault]] that is published to https://notes.thorg.app
+	Gives you externally facing Thorg markdown documentation in markdown format.
+	
+	Also note if you want to load in entire context of Thorg externally facing documentation than look at [[t.ext.as-context-for-llm]].
 	
 </note>
 <note name="t.ext.command" title="Thorg Command">
@@ -2171,9 +2191,9 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- `server.pid`: Contains the PID (Process ID) of the Thorg server running for this workspace.
 	- `server.port`: Contains the port the Thorg server is using.
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file" title="server.port (Holds port number of Running Thorg Server)">
+<note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file" title="$WORKSPACE/.thorg/tmp/server/instance/server.port">
 	
-	This file holds the port number of the running Thorg server.
+	This file holds the [[t.ext.concept.serverPort]] of the [[t.ext.thorgServer]] that is running for this [[workspace|t.ext.data.type.workspace]].
 	
 	### Location
 	Located at `$WORKSPACE/.thorg/tmp/server/instance/server.port` when a Thorg server instance is running for this workspace.
@@ -2181,8 +2201,8 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	This file is deleted when the server terminates gracefully.
 	
 	### Related
-	![[t.ext.thorgServer.default-port]]
-	
+	- [[t.ext.thorgServer.default-port]]
+	- [[rel.configured-by]]:**[[t.ext.configuration.values.startupSetup.serverPort]]**
 	
 </note>
 <note name="t.ext.feature" title="Feature Hierarchy">
@@ -2411,9 +2431,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	### HOME/.thorg
 	![[t.ext.file.home-thorg-dir]]
-	
-	### Thorg server
-	![[t.ext.thorgServer.file]]
 </note>
 <note name="t.ext.file-format.free-mind" title="FreeMind (.mm)">
 	
@@ -2709,7 +2726,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.how-to.install-thorg" title="Install Thorg">
 	
-	
 	### Pre-Requisites
 	
 	- You use **MacOS** or **Linux** (No Windows support yet)
@@ -2731,8 +2747,39 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	</details>
 	
 	
-	### How to install:
-	TODO: Add S3 link to download and instructions on how to install the VSIX file.
+	### Installation steps
+	- Download the latest Thorg release from S3 (Or if required due to an issue see: [[t.ext.how-to.install-thorg.previous-releases]])
+	![[t.ext.how-to.install-thorg.latest-release]]
+	
+	- Then follow the steps on [[t.ext.how-to.install-thorg.how-to-install-VSIX-file]]
+	
+	
+</note>
+<note name="t.ext.how-to.install-thorg.how-to-install-VSIX-file" title="how-to-install-VSIX-file to VSCode">
+	
+	There are two ways to install the VSIX file that you downloaded as part of [[t.ext.how-to.install-thorg]]
+	
+	### Using UI
+	![](./assets/submodule/for_external/Screenshot-2025_11_26T13_23_13.png){max-width: 500px, display: block, margin: 0 auto, border: 5px solid black}
+	
+	Then choose the VSIX file that you downloaded as part of [[t.ext.how-to.install-thorg]].
+	
+	
+	### Using CLI
+	```bash
+	code --install-extension $thorg-downloaded-vsix-file
+	```
+	
+	[Reference: VSCode documentation](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix)
+</note>
+<note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
+	
+	Latest Thorg release in S3: **[Thorg VSIX v0.1.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.1.0.vsix)**
+	
+</note>
+<note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
+	
+	- [Thorg VSIX v0.1.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.1.0.vsix)
 </note>
 <note name="t.ext.message-from-app" title="Message from App">
 	
@@ -3169,6 +3216,24 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	### Why?
 	Helps you avoid simple spelling mistakes.
 </note>
+<note name="t.ext.tip.thorg.one-workspace-multiple-vaults" title="Recommendation: One Workspace-Multiple Vaults. Instead of multi-workspace">
+	
+	**Recommendation:** Use one [[t.ext.data.type.workspace]] with multiple [[vaults|t.ext.data.type.vault]].
+	
+	**Not Recommended:** Running multiple [[t.ext.data.type.workspace]] instances (which requires multiple [[t.ext.thorgServer]] instances).
+	
+	**Why multiple workspaces are not recommended:**
+	
+	This approach is typically unnecessary. The recommendation is to run a single workspace containing all your [[vaults|t.ext.data.type.vault]]. Running multiple workspaces has drawbacks:
+	
+	1) **Resource overhead:** Requires multiple separate instances of [[t.ext.thorgServer]], consuming more system resources.
+	
+	2) **Navigation difficulty:** You must remember which VS Code window is running which workspace, making quick navigation between apps cumbersome.
+	
+	**Better approach:**
+	
+	Use one [[t.ext.data.type.workspace]] containing multiple [[vaults|t.ext.data.type.vault]]. Organize information using [[hierarchies|t.ext.data.type.note.hierarchy]], then leverage tools like [[t.ext.command.search.quick.in-subtree.all]] to search within specific hierarchies.
+</note>
 <note name="t.ext.tip.vscode.assign-shortcut-to-open-a-frequent-file" title="Assign Shortcut to Open a Frequently Visited File - Navigate to Exact Note.">
 	
 	<div class="llm-tag">
@@ -3324,6 +3389,10 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	Now your keybindings are version controlled, and VSCode will continue to read and write to the file through the symlink as if nothing changed from its perspective.
 </note>
+<note name="t.ext.troubleshooting" title="Troubleshooting">
+	
+	Hierarchy for troubleshooting.
+</note>
 <note name="t.ext.troubleshooting.linux.inotify" title="Troubleshooting Inotify on Linux">
 	
 	There are two pathways
@@ -3454,6 +3523,90 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	```
 	
 	If you want to get the actual limits used, that is not as straightforward and requires some scripting. You can see some options [here](https://unix.stackexchange.com/a/502359/364768), (Also remember [[t.ext._.review-script-prior-to-running-them]])
+</note>
+<note name="t.ext.troubleshooting.server-port" title="Server Port Troubleshooting">
+	
+	Hierarchy for troubleshooting in regards to [[t.ext.concept.serverPort]].
+	
+	See child notes.
+</note>
+<note name="t.ext.troubleshooting.server-port.is-used-by-another-thorg-server-at-another-workspace" title="Troubleshooting: Port Is Used by Another Thorg Server at Another Workspace">
+	
+	This error occurs when another [[t.ext.thorgServer]] instance is already running on the same port but in a different [[t.ext.data.type.workspace]].
+	
+	
+	### If you're running a single workspace and got this error
+	
+	Even after closing all VS Code instances, you may still encounter this error. This typically means a Thorg server instance did not shut down properly.
+	
+	Refer to [[t.ext.troubleshooting.server-port.is-used-by-some-other-process.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac]] for operating system-level steps to identify and shut down the misbehaving server process.
+	
+	### If you want to run multiple workspaces (not recommended)
+	
+	If you still want to run multiple [[t.ext.data.type.workspace]] instances simultaneously after reading [[t.ext.tip.thorg.one-workspace-multiple-vaults]], you'll need to change the port number for one of the workspaces.
+	
+	To do this, modify the [[t.ext.configuration.values.startupSetup.serverPort]] setting in one of the running workspaces.
+</note>
+<note name="t.ext.troubleshooting.server-port.is-used-by-some-other-process" title="Troubleshooting Thorg Server Port Is Used by some other process">
+	
+	This is troubleshooting for when **another** process is using the port that the Thorg server is configured to use.
+	
+	The simplest approach is to change the port Thorg uses by updating [[t.ext.configuration.values.startupSetup.serverPort]], then [[restart VSCode|t.ext.vscode.how-to.reload]].
+	
+	If you're curious to learn more on this topic, see below:
+	
+	<details class="bordered-when-open">
+	<summary>How to find out which process is listening on the port — and kill it (Linux & macOS)</summary>
+	
+	![[t.ext.troubleshooting.server-port.is-used-by-some-other-process.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac]]
+	</details>
+</note>
+<note name="t.ext.troubleshooting.server-port.is-used-by-some-other-process.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac" title="How to Find Out Who Is Listening on Port and shut it down (Linux & Mac)">
+	
+	
+	Finding out which process is listening on a given port is quite useful.
+	
+	You can do this with the following commands (using port 7567 as an example).
+	
+	## Linux & macOS
+	
+	```bash
+	# `-i` selects by internet address; `:PORT` filters by port number.
+	# 
+	# Note: On Linux, you may need `sudo` to see process names for ports owned by other users.
+	lsof -i :7567
+	```
+	
+	You should get output like:
+	
+	```txt
+	COMMAND   PID               USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+	java    21564 nickolaykondratyev  216u  IPv6  10185      0t0  TCP localhost:7567 (LISTEN)
+	```
+	
+	**PID** is the [Process Identifier](https://en.wikipedia.org/wiki/Process_identifier). In the example above, the PID is 21564.
+	
+	You can use the PID to shut down the process:
+	
+	### Graceful shutdown
+	
+	```bash
+	# SIGTERM tells the app to shut down gracefully, allowing it to
+	# execute cleanup code and close resources properly.
+	# 
+	# After sending this signal, allow some time for the app to finish
+	# before resorting to SIGKILL.
+	kill -SIGTERM 21564
+	```
+	
+	### Forceful shutdown
+	
+	```bash
+	# SIGKILL immediately terminates the process without allowing
+	# any cleanup code to run. Use as a last resort.
+	kill -SIGKILL 21564
+	```
+	
 </note>
 <note name="t.ext.vscode.how-to.change-your-keybindings-json" title="How to Change Your keybindings.json">
 	
