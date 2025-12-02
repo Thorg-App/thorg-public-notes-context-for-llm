@@ -875,14 +875,10 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.concept.serverPort" title="serverPort">
 	
-	This is the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)) on which [[Thorg Server|t.ext.thorgServer]] will run.
+	This is the [port](https://en.wikipedia.org/wiki/Port_(computer_networking)) on which [[Thorg Server|t.ext.thorgServer]] runs.
 	
-	### How to configure
-	[[t.ext.configuration.values.startupSetup.serverPort]]
-	
-	### QA
-	#### Why not auto-pick port on startup?
-	We use a stable port to make it easier to interact with Thorg Server outside of VSCode in the future.
+	### How Port is Determined
+	The port is dynamically allocated when the Thorg server starts up. The server finds an available port and writes it to [[t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file]].
 </note>
 <note name="t.ext.concept.thorgUsername" title="Thorg Username (Concept)">
 	
@@ -1005,7 +1001,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- [[t.ext.configuration.values.startupSetup.javaExecutablePath]]
 	- [[t.ext.configuration.values.startupSetup.machineName]]
 	- [[t.ext.configuration.values.startupSetup.serverMaxHeapSpaceMB]]
-	- [[t.ext.configuration.values.startupSetup.serverPort]]
 	- [[t.ext.configuration.values.startupSetup.thorgUsername]]
 	
 	#### How to Modify
@@ -1034,14 +1029,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	Configuration that defines the maximum amount of heap space allocated to the process running [[t.ext.thorgServer]] on a [JVM](https://en.wikipedia.org/wiki/Java_virtual_machine). This depends on the number of notes you have.
 	
 	Note that the maximum heap space does not mean all of it will be used, but it does influence when the JVM decides to garbage collect.
-	
-	### How to Change
-	[[t.ext.configuration.how-to-change-thorg-configuration]]
-	
-</note>
-<note name="t.ext.configuration.values.startupSetup.serverPort" title="thorg.startupSetup.serverPort - VSCode Config">
-	
-	![[t.ext.concept.serverPort]]
 	
 	### How to Change
 	[[t.ext.configuration.how-to-change-thorg-configuration]]
@@ -2200,9 +2187,11 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	This file is deleted when the server terminates gracefully.
 	
+	### How Port is Determined
+	The port is dynamically allocated when the Thorg server starts up. The server finds an available port and writes it to this file.
+	
 	### Related
 	- [[t.ext.thorgServer.default-port]]
-	- [[rel.configured-by]]:**[[t.ext.configuration.values.startupSetup.serverPort]]**
 	
 </note>
 <note name="t.ext.feature" title="Feature Hierarchy">
@@ -2601,6 +2590,53 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	File in [[t.ext.file.home-thorg-dir.not-under-scm.logs]] for storing logging failures.
 	
 	See anchor point for the file path.
+</note>
+<note name="t.ext.general.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac" title="How to Find Out Who Is Listening on Port and shut it down (Linux & Mac)">
+	
+	
+	Finding out which process is listening on a given port is quite useful.
+	
+	You can do this with the following commands (using port 7567 as an example).
+	
+	## Linux & macOS
+	
+	```bash
+	# `-i` selects by internet address; `:PORT` filters by port number.
+	# 
+	# Note: On Linux, you may need `sudo` to see process names for ports owned by other users.
+	lsof -i :7567
+	```
+	
+	You should get output like:
+	
+	```txt
+	COMMAND   PID               USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
+	java    21564 nickolaykondratyev  216u  IPv6  10185      0t0  TCP localhost:7567 (LISTEN)
+	```
+	
+	**PID** is the [Process Identifier](https://en.wikipedia.org/wiki/Process_identifier). In the example above, the PID is 21564.
+	
+	You can use the PID to shut down the process:
+	
+	### Graceful shutdown
+	
+	```bash
+	# SIGTERM tells the app to shut down gracefully, allowing it to
+	# execute cleanup code and close resources properly.
+	# 
+	# After sending this signal, allow some time for the app to finish
+	# before resorting to SIGKILL.
+	kill -SIGTERM 21564
+	```
+	
+	### Forceful shutdown
+	
+	```bash
+	# SIGKILL immediately terminates the process without allowing
+	# any cleanup code to run. Use as a last resort.
+	kill -SIGKILL 21564
+	```
+	
 </note>
 <note name="t.ext.guide.getting-started.from-dendron" title="Guide: Getting started Coming From Dendron">
 	
@@ -3523,90 +3559,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	```
 	
 	If you want to get the actual limits used, that is not as straightforward and requires some scripting. You can see some options [here](https://unix.stackexchange.com/a/502359/364768), (Also remember [[t.ext._.review-script-prior-to-running-them]])
-</note>
-<note name="t.ext.troubleshooting.server-port" title="Server Port Troubleshooting">
-	
-	Hierarchy for troubleshooting in regards to [[t.ext.concept.serverPort]].
-	
-	See child notes.
-</note>
-<note name="t.ext.troubleshooting.server-port.is-used-by-another-thorg-server-at-another-workspace" title="Troubleshooting: Port Is Used by Another Thorg Server at Another Workspace">
-	
-	This error occurs when another [[t.ext.thorgServer]] instance is already running on the same port but in a different [[t.ext.data.type.workspace]].
-	
-	
-	### If you're running a single workspace and got this error
-	
-	Even after closing all VS Code instances, you may still encounter this error. This typically means a Thorg server instance did not shut down properly.
-	
-	Refer to [[t.ext.troubleshooting.server-port.is-used-by-some-other-process.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac]] for operating system-level steps to identify and shut down the misbehaving server process.
-	
-	### If you want to run multiple workspaces (not recommended)
-	
-	If you still want to run multiple [[t.ext.data.type.workspace]] instances simultaneously after reading [[t.ext.tip.thorg.one-workspace-multiple-vaults]], you'll need to change the port number for one of the workspaces.
-	
-	To do this, modify the [[t.ext.configuration.values.startupSetup.serverPort]] setting in one of the running workspaces.
-</note>
-<note name="t.ext.troubleshooting.server-port.is-used-by-some-other-process" title="Troubleshooting Thorg Server Port Is Used by some other process">
-	
-	This is troubleshooting for when **another** process is using the port that the Thorg server is configured to use.
-	
-	The simplest approach is to change the port Thorg uses by updating [[t.ext.configuration.values.startupSetup.serverPort]], then [[restart VSCode|t.ext.vscode.how-to.reload]].
-	
-	If you're curious to learn more on this topic, see below:
-	
-	<details class="bordered-when-open">
-	<summary>How to find out which process is listening on the port — and kill it (Linux & macOS)</summary>
-	
-	![[t.ext.troubleshooting.server-port.is-used-by-some-other-process.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac]]
-	</details>
-</note>
-<note name="t.ext.troubleshooting.server-port.is-used-by-some-other-process.how-to-find-out-who-is-listening-on-port-and-shut-it-down-linux-mac" title="How to Find Out Who Is Listening on Port and shut it down (Linux & Mac)">
-	
-	
-	Finding out which process is listening on a given port is quite useful.
-	
-	You can do this with the following commands (using port 7567 as an example).
-	
-	## Linux & macOS
-	
-	```bash
-	# `-i` selects by internet address; `:PORT` filters by port number.
-	# 
-	# Note: On Linux, you may need `sudo` to see process names for ports owned by other users.
-	lsof -i :7567
-	```
-	
-	You should get output like:
-	
-	```txt
-	COMMAND   PID               USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
-	java    21564 nickolaykondratyev  216u  IPv6  10185      0t0  TCP localhost:7567 (LISTEN)
-	```
-	
-	**PID** is the [Process Identifier](https://en.wikipedia.org/wiki/Process_identifier). In the example above, the PID is 21564.
-	
-	You can use the PID to shut down the process:
-	
-	### Graceful shutdown
-	
-	```bash
-	# SIGTERM tells the app to shut down gracefully, allowing it to
-	# execute cleanup code and close resources properly.
-	# 
-	# After sending this signal, allow some time for the app to finish
-	# before resorting to SIGKILL.
-	kill -SIGTERM 21564
-	```
-	
-	### Forceful shutdown
-	
-	```bash
-	# SIGKILL immediately terminates the process without allowing
-	# any cleanup code to run. Use as a last resort.
-	kill -SIGKILL 21564
-	```
-	
 </note>
 <note name="t.ext.vscode.how-to.change-your-keybindings-json" title="How to Change Your keybindings.json">
 	
