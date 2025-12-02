@@ -2810,12 +2810,15 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
 	
-	Latest Thorg release in S3: **[Thorg VSIX v0.1.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.1.0.vsix)**
+	Latest Thorg release in S3: **[Thorg VSIX v0.2.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.2.0.vsix)**
 	
 </note>
 <note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
 	
+	- [Thorg VSIX v0.2.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.2.0.vsix)
+	
 	- [Thorg VSIX v0.1.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.1.0.vsix)
+	
 </note>
 <note name="t.ext.message-from-app" title="Message from App">
 	
