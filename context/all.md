@@ -2784,7 +2784,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	
 	### Installation steps
-	- Download the latest Thorg release from S3 (Or if required due to an issue see: [[t.ext.how-to.install-thorg.previous-releases]])
+	- Download the [[latest|t.ext.how-to.install-thorg.latest-release]] Thorg release from S3 (Or if required due to an issue see: [[t.ext.how-to.install-thorg.previous-releases]])
 	![[t.ext.how-to.install-thorg.latest-release]]
 	
 	- Then follow the steps on [[t.ext.how-to.install-thorg.how-to-install-VSIX-file]]
@@ -2810,10 +2810,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
 	
-	Latest Thorg release in S3: **[Thorg VSIX v0.2.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.2.0.vsix)**
+	Latest Thorg release in S3: **[Thorg VSIX v0.3.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.3.0.vsix)**
 	
 </note>
 <note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
+	
+	- [Thorg VSIX v0.3.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.3.0.vsix)
 	
 	- [Thorg VSIX v0.2.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.2.0.vsix)
 	
