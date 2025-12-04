@@ -16,23 +16,22 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t" title="Thorg (Thought Organizer)">
 	
-	Welcome to **Thorg** (Thought Organizer)!
+	<div class="centered">
 	
-	**Thorg** is available as it's own **[VSCode](https://code.visualstudio.com)** Plugin for knowledge management using [[hierarchical|t.ext.data.type.note.hierarchy]] markdown files. Local-first. Built for **scale** using multi-threaded Kotlin server for core logic. **Compatible** to be used alongside **[Dendron](https://www.dendron.so/)** plugin.
+	Welcome to **Thorg**!
+	</div>
+	
+	**Thorg** is a **[VSCode](https://code.visualstudio.com)** plugin for knowledge management using [[hierarchical|t.ext.data.type.note.hierarchy]] [markdown](https://en.wikipedia.org/wiki/Markdown) files with [[frontmatter|t.ext.data.type.note.frontmatter]] metadata, called [[notes|t.ext.data.type.note]]. Local-first and built for **scale** with a multi-threaded Kotlin server handling core logic. **Compatible** with the **[Dendron](https://www.dendron.so/)** plugin. Currently adding stronger **search** functionality (see [[t.ext._.highlighted-commands]]). All exposed functionality is **free**.
 	
 	
-	We are in the **early stages** of the product (even though it took quite a bit of development effort to get here).
-	But even at this early stage, if you are a current [Dendron](https://www.dendron.so/) user, we believe there is value in giving Thorg a try. We are working to fill the gaps to make Thorg fully standalone, and to implement more exciting features around the three pillars that **Thorg** focuses on:
-	- Search
-	- Visualization
-	- Refactoring
+	## How to install Thorg
+	![[t.ext.how-to.install-thorg]]
 	
+	## Highlighted commands
 	The following commands (and more) are available to try out now:
 	
 	![[t.ext._.highlighted-commands]]
 	
-	## How to install Thorg
-	![[t.ext.how-to.install-thorg]]
 	
 	## How to reach out
 	![[t.ext.contact-us]]
@@ -1276,11 +1275,10 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.data.type.note" title="Note">
 	
-	<div class="centered">
+	<div class="centered xlarge">
 	
-	In short: A Thorg note is a [Markdown](https://en.wikipedia.org/wiki/Markdown) file with [YAML](https://en.wikipedia.org/wiki/YAML) [FrontMatter](https://jekyllrb.com/docs/front-matter/) that contains a globally unique `id` field.
+	In short: A Thorg note is a [Markdown](https://en.wikipedia.org/wiki/Markdown) file with [[t.ext.data.type.note.frontmatter]] that contains a globally unique `id` field.
 	</div>
-	
 	
 	
 	### Frontmatter
@@ -1542,6 +1540,29 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	```
 </note>
 <note name="t.ext.data.type.note.frontmatter" title="Frontmatter Documentation">
+	
+	<div class="xlarge centered">
+	
+	**Frontmatter** is valid [YAML](https://en.wikipedia.org/wiki/YAML) between triple-dashed (`---`) lines that is the first thing in the file.
+	</div>
+	
+	
+	<details class="bordered">
+	<summary>Example Frontmatter</summary>
+	
+	```yaml
+	---
+	id: ezbbhbn8i8thheiak1ng2vq
+	title: "Note title"
+	desc: ''
+	updated: 1685861421330
+	created: 1685861421330
+	---
+	Above this line is the frontmatter. This line and below is the markdown content.
+	```
+	
+	</details>
+	
 	
 	![[t.ext.data.type.note.frontmatter.field]]
 	
@@ -2775,7 +2796,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	<details class="bordered-when-open">
 	<summary>You currently use Dendron</summary>
 	
-	- Why: We are working to fill the gaps to make Thorg run standalone, but right now we rely on Dendron for some functionality that Thorg has not exposed yet (such as note creation).
+	- Why: We are working to fill the gaps to make Thorg run standalone, but right now we rely on [Dendron](https://www.dendron.so/) for some functionality that Thorg has not exposed yet (such as note creation).
 	</details>
 	
 	<details class="bordered-when-open">
@@ -2789,14 +2810,14 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	
 	### Installation steps
-	- Download the [[latest|t.ext.how-to.install-thorg.latest-release]] Thorg release from S3 (Or if required due to an issue see: [[t.ext.how-to.install-thorg.previous-releases]])
+	- Download the [[latest|t.ext.how-to.install-thorg.latest-release]] Thorg release (Or if required due to an issue see: [[t.ext.how-to.install-thorg.previous-releases]])
 	![[t.ext.how-to.install-thorg.latest-release]]
 	
 	- Then follow the steps on [[t.ext.how-to.install-thorg.how-to-install-VSIX-file]]
 	
 	
 </note>
-<note name="t.ext.how-to.install-thorg.how-to-install-VSIX-file" title="how-to-install-VSIX-file to VSCode">
+<note name="t.ext.how-to.install-thorg.how-to-install-VSIX-file" title="How to install VSIX file as VSCode Plugin">
 	
 	There are two ways to install the VSIX file that you downloaded as part of [[t.ext.how-to.install-thorg]]
 	
