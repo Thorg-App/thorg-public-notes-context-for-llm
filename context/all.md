@@ -21,7 +21,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	Welcome to **Thorg**!
 	</div>
 	
-	**Thorg** is a **[VSCode](https://code.visualstudio.com)** plugin for knowledge management using [[hierarchical|t.ext.data.type.note.hierarchy]] [markdown](https://en.wikipedia.org/wiki/Markdown) files with [[frontmatter|t.ext.data.type.note.frontmatter]] metadata, called [[notes|t.ext.data.type.note]]. Local-first and built for **scale** with a multi-threaded Kotlin server handling core logic. **Compatible** with the **[Dendron](https://www.dendron.so/)** plugin. Currently adding stronger **search** functionality (see [[t.ext._.highlighted-commands]]). All exposed functionality is **free**.
+	**Thorg** is a **[VSCode](https://code.visualstudio.com)** plugin for knowledge management using [[hierarchical|t.ext.data.type.note.hierarchy]] [markdown](https://en.wikipedia.org/wiki/Markdown) files with [[frontmatter|t.ext.data.type.note.frontmatter]] metadata, called [[notes|t.ext.data.type.note]]. Local-first and built for **scale** with a multi-threaded Kotlin server handling core logic. **Compatible** with the **[Dendron](https://www.dendron.so/)** plugin. Currently adding stronger **search** functionality (see [[t.ext._.highlighted-commands]]). All current exposed functionality is **free**.
 	
 	
 	## How to install Thorg
@@ -64,7 +64,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	  - [[t.ext.command.search.quick.in-subtree.updated-since]] - Search with subtree filter, limited to notes that have been updated since a specified time.
 	
 	### Next: Setup Shortcuts
-	Once you have checked out the highlighted commands, look at [[t.ext._.setup-of-shortcuts]] to set up your shortcut schema in an ergonomic and quickly accessible way.
+	Once you have checked out the highlighted commands, look at **[[t.ext._.setup-of-shortcuts]]** to set up your shortcut schema in an **ergonomic** and quickly accessible way.
 </note>
 <note name="t.ext._.review-script-prior-to-running-them" title="Remember to Review Scripts from Internet Prior to Running Them">
 	
@@ -428,6 +428,35 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	If you have a workflow that depends on updated-since, set up shortcuts for the following commands: [[thorg.search.quick.updated-since.XXX|t.ext.command.search.quick.updated-since]] and [[thorg.search.quick.in-subtree.updated-since.XXX|t.ext.command.search.quick.in-subtree.updated-since]]. Pick an entry key and follow a pattern similar to the [[t.ext._.setup-of-shortcuts.ctrl-t-setup]] setup.
 	
+</note>
+<note name="t.ext._.windows-how-to-increase-path-length" title="Windows How to Increase Path Length">
+	
+	## Problem
+	Windows (last I checked even Windows11) comes setup to limit the max path length to about 260 characters. Which is quite problematic if you want to have longer note names.
+	
+	## Solution: enable long paths
+	The solution is simple to turn on `LongPathsEnabled` option
+	
+	### In Powershell (Run as **Administrator**)
+	
+	**Open PowerShell as Administrator:**
+	   - Press the `Windows` key (or click the Start button)
+	   - Type `powershell` in the search box
+	   - **Right-click** on "Windows PowerShell" in the search results
+	   - Select **"Run as administrator"** from the context menu
+	   - Click "Yes" when prompted by User Account Control (UAC)
+	
+	**Enable long paths** by copying the following command and running it in PowerShell:
+	```ps1
+	New-ItemProperty -Path "HKLM:\SYSTEM\CurrentControlSet\Control\FileSystem" -Name "LongPathsEnabled" -Value 1 -PropertyType DWORD -Force
+	```
+	
+	**Set long paths flag to true in git config:**
+	```ps1
+	git config --system core.longpaths true
+	```
+	
+	**REBOOT/RESTART** your computer for settings to take effect.
 </note>
 <note name="t.ext.as-context-for-llm" title="Thorg Documentation As Context for LLM">
 	
@@ -1167,6 +1196,8 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 <note name="t.ext.contact-us.submit-git-hub-issue.highlighted-known-issue.no-windows-support-yet" title="Thorg does NOT support Windows Yet, Vote here for Windows Support ✅">
 	
 	**[Vote here for: Feature Add support for windows. · Issue-1 · Thorg-App/issues-thorg-vscode](https://github.com/Thorg-App/issues-thorg-vscode/issues/1)**
+	
+	Windows support is here with V0.5.0
 </note>
 <note name="t.ext.contact-us.submit-git-hub-issue.how-to" title="How To">
 	
@@ -1277,7 +1308,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	<div class="centered xlarge">
 	
-	In short: A Thorg note is a [Markdown](https://en.wikipedia.org/wiki/Markdown) file with [[t.ext.data.type.note.frontmatter]] that contains a globally unique `id` field.
+	In short: A Thorg note is a [Markdown](https://en.wikipedia.org/wiki/Markdown) file with [[frontmatter|t.ext.data.type.note.frontmatter]] that contains a globally unique `id` field.
 	</div>
 	
 	
@@ -1539,7 +1570,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	note_name.md
 	```
 </note>
-<note name="t.ext.data.type.note.frontmatter" title="Frontmatter Documentation">
+<note name="t.ext.data.type.note.frontmatter" title="Frontmatter">
 	
 	<div class="xlarge centered">
 	
@@ -2201,8 +2232,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	Contains files that represent the Thorg server instance for this workspace.
 	
 	Specifically:
-	- `server.pid`: Contains the PID (Process ID) of the Thorg server running for this workspace.
-	- `server.port`: Contains the port the Thorg server is using.
+	- [[t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file]] - Contains the port the Thorg server is using.
 </note>
 <note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file" title="$WORKSPACE/.thorg/tmp/server/instance/server.port">
 	
@@ -2261,9 +2291,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.feature.visit-history.file.content-format" title="Visit history file Content Format">
 	
-	The visit history **file contains the [[note id|t.ext.data.type.note.frontmatter.field.id]]** in the file name. Therefore, we do NOT need to duplicate the note id in the events themselves (see [[t.ext.feature.visit-history.file.location]] for details on file location).
+	[[t.ext.feature.visit-history.file]]: contains the data to power [[Visit history Feature|t.ext.feature.visit-history]] (in short this file contains the timestamps of when you visited particular note).
 	
-	The contents of the visit log file are in compact **text** format with the following structure per line:
+	[[Visit history file path|t.ext.feature.visit-history.file.location]] **contains the [[note id|t.ext.data.type.note.frontmatter.field.id]]** in the file name. Therefore, we do NOT need to duplicate the note id in the events that we store.
+	
+	
+	The contents of the visit histroy file are in compact **text** format with the following structure per line:
 	
 	### Line Structure
 	
@@ -2291,6 +2324,27 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	### Stored transparently
 	Per [[t.ext.data.thorg-view-on-data.transparent-data-model]], we use a human-readable format to store data in a transparent (non-proprietary) way. We opted away from JSONL to keep files compact while retaining human readability and ease of parsing, so you can see what is being recorded and parse it if you desire.
 	
+	### Future-proof parsing guidance
+	
+	<details class="bordered-when-open">
+	<summary>Future-proof parsing guidance</summary>
+	
+	If you're parsing this data, you can future-proof your implementation by expecting additional fields to be added after the current ones, separated by the `:` delimiter.
+	
+	In future versions, we may extend the data recorded per event:
+	
+	```txt
+	F:1753911954503:<some-new-data>:<additional-field>
+	```
+	
+	**Simple future-proofing strategy:**
+	1. Take one line
+	2. Split on `:` delimiter to get tokens
+	3. Read `tokens[0]` (action type) and `tokens[1]` (timestamp)
+	4. Ignore any additional tokens beyond index 1
+	
+	This ensures your parser continues working even as new fields are added.
+	</details>
 </note>
 <note name="t.ext.feature.visit-history.file.location" title="Visit History file Location - (Where visit history data is written to)">
 	 
@@ -2789,10 +2843,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 <note name="t.ext.how-to.install-thorg" title="Install Thorg">
 	
 	### Pre-Requisites
-	
-	- You use **MacOS** or **Linux** (No Windows support yet)
-	  - If you would like us to prioritize adding Windows support, vote [[here|t.ext.contact-us.submit-git-hub-issue.highlighted-known-issue.no-windows-support-yet]]
-	
 	<details class="bordered-when-open">
 	<summary>You currently use Dendron</summary>
 	
@@ -2836,10 +2886,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
 	
-	Latest Thorg release in S3: **[Thorg VSIX v0.3.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.3.0.vsix)**
+	Latest Thorg release in S3: **[Thorg VSIX v0.5.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.5.0.vsix)**
 	
 </note>
 <note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
+	
+	- [Thorg VSIX v0.5.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.5.0.vsix)
 	
 	- [Thorg VSIX v0.3.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.3.0.vsix)
 	
@@ -3186,6 +3238,10 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- Linux: Ask Claude/GPT how to do it for your distribution.
 	- [Windows - Using PowerToys](https://superuser.com/a/1554452/1077967)
 	  - NOTE: [[⚠️Thorg does NOT support Windows Yet⚠️|t.ext.contact-us.submit-git-hub-issue.highlighted-known-issue.no-windows-support-yet]]
+</note>
+<note name="t.ext.tip.llm-integ-use-gitingest" title="Llm Integ Use Gitingest">
+	
+	For github repositories, utilize https://gitingest.com/ to ingest repositories.
 </note>
 <note name="t.ext.tip.note-naming" title="Note Naming Tips">
 	
