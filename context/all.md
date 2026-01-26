@@ -21,7 +21,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	Welcome to **Thorg**!
 	</div>
 	
-	**Thorg** is a **[VSCode](https://code.visualstudio.com)** plugin for knowledge management using [[hierarchical|t.ext.data.type.note.hierarchy]] [markdown](https://en.wikipedia.org/wiki/Markdown) files with [[frontmatter|t.ext.data.type.note.frontmatter]] metadata, called [[notes|t.ext.data.type.note]]. Local-first and built for **scale** with a multi-threaded Kotlin server handling core logic. **Compatible** with the **[Dendron](https://www.dendron.so/)** plugin. Currently adding stronger **search** functionality (see [[t.ext._.highlighted-commands]]). All current exposed functionality is **free**.
+	**Thorg** is a **[VSCode](https://code.visualstudio.com)** plugin for knowledge management using [[hierarchical|t.ext.data.type.note.hierarchy]] [markdown](https://en.wikipedia.org/wiki/Markdown) files with [[frontmatter|t.ext.data.type.note.frontmatter]] metadata, called [[notes|t.ext.data.type.note]]. Local-first and built for **scale** with a multi-threaded Kotlin server handling core logic. **Compatible** with the **[Dendron](https://www.dendron.so/)** plugin. Currently adding stronger **search** functionality (see [[t.ext.bkt.highlighted-commands]]). All current exposed functionality is **free**.
 	
 	
 	## How to install Thorg
@@ -30,7 +30,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	## Highlighted commands
 	The following commands (and more) are available to try out now:
 	
-	![[t.ext._.highlighted-commands]]
+	![[t.ext.bkt.highlighted-commands]]
 	
 	
 	## How to reach out
@@ -45,11 +45,126 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	Check out the children of this note, as well as the top-level ancestor of this note: [[t]].
 </note>
-<note name="t.ext._.data_type_anchorPoint.frontMatterFormat" title="Anchor Point frontMatterFormat">
+<note name="t.ext.as-context-for-llm" title="Thorg Documentation As Context for LLM">
+	
+	This **[single file](https://raw.githubusercontent.com/Thorg-App/thorg-public-notes-context-for-llm/refs/heads/main/context/all.md)** from [this](https://github.com/Thorg-App/thorg-public-notes-context-for-llm) git repo contains all notes from [notes.thorg.app](https://notes.thorg.app), ready to add as LLM context.
+	
+	#### Individual files
+	<details class="bordered-when-open">
+	<summary>Individual files in public repo</summary>
+	
+	![[t.ext.as-context-for-llm.public-repo]]
+	</details>
+	
+	### Tip:
+	- [GoogleAI Studio](https://aistudio.google.com) is free as of this writing and has large context window.
+</note>
+<note name="t.ext.as-context-for-llm.public-repo" title="Public Repo (with notes.thorg.app content)">
+	
+	<div class="centered xxlarge">
+	
+	**[thorg-public-notes](https://github.com/Thorg-App/thorg-public-notes)**
+	</div>
+	
+	**thorg-public-notes**: Repository that contains [[vault|t.ext.data.type.vault]] that is published to https://notes.thorg.app
+	Gives you externally facing Thorg markdown documentation in markdown format.
+	
+	Also note if you want to load in entire context of Thorg externally facing documentation than look at [[t.ext.as-context-for-llm]].
+	
+</note>
+<note name="t.ext.bkt" title="Bucket hierarchy">
+	
+	For notes that haven't found a more permanent home and will likely be moved to a more specific hierarchy as the time goes.
+</note>
+<note name="t.ext.bkt.create-new-note" title="Create New Note">
+	
+	### Create new note from quick search
+	
+	You can create a new [[note|t.ext.data.type.note]] directly from quick search commands such as:
+	- [[t.ext.command.search.quick.all]]
+	- [[t.ext.command.search.quick.visited-since]]
+	
+	As you enter the search term. If the search term doesn't match any existing note in your [[vaults|t.ext.data.type.vault]], you'll see an option to create a new note:
+	
+	![](./assets/submodule/images/Screenshot From 2026-01-01 12-56-39.png){max-width: 500px, display: block, margin: 0 auto, border: 5px solid black}
+	
+	TIP: The create option appears at the bottom of the results list. If there are many matches, press UP to wrap around to it quickly.
+</note>
+<note name="t.ext.bkt.data_type_anchorPoint.frontMatterFormat" title="Anchor Point frontMatterFormat">
 	
 	#not-ready-yet.in-queue-to-start: Anchor point is an upcoming feature to make it easy to navigate to exact places in a codebase from notes.
 </note>
-<note name="t.ext._.highlighted-commands" title="Thorg Highlighted Commands">
+<note name="t.ext.bkt.doc-val-json-config-pattern" title="Doc/Val Json Config Pattern">
+	
+	## High-Level Goal
+	Enable configuration files to reference their documentation, making it easy for advanced users and Thorg developers to understand configuration options directly from the config files themselves.
+	
+	## Problem
+	JSON doesn't support comments, while alternative formats that do (like [JSON5](https://json5.org/)) have limitations:
+	- **Poor cross-language support** for programmatically writing comments (Kotlin & TypeScript)
+	- **Lack of robust tooling** like `jq` that advanced users depend on for JSON manipulation
+	
+	## Proposed Solution: Sibling `__thorg_doc_do_not_edit` Keys
+	Place a `<key>__thorg_doc_do_not_edit` sibling next to each documented configuration key:
+	
+	This approach enables:
+	- Programmatic comment/documentation writing when modifying configs
+	- In-file documentation references for users
+	- Preservation of JSON's tooling ecosystem (`jq`, etc.)
+	- Cross-language compatibility (Kotlin & TypeScript)
+	- Direct value access without extra nesting
+	
+	### Example Structure
+	```json
+	{
+	    "_doc_format__thorg_doc_do_not_edit": "Keys ending in __thorg_doc_do_not_edit describe their sibling key...",
+	
+	    "server": {
+	        "port": 8080,
+	        "port__thorg_doc_do_not_edit": "Port the server listens on",
+	
+	        "timeout": 30,
+	        "timeout__thorg_doc_do_not_edit": "Seconds before connection fails"
+	    },
+	    "server__thorg_doc_do_not_edit": "Top-level server configuration"
+	}
+	```
+	
+	### Future Enhancement
+	JSON Schema can be added later for validation and editor integration. The `__thorg_doc_do_not_edit` keys provide immediate in-file documentation, while schema adds type checking, autocomplete, and generated docs. Both approaches complement each other.
+	
+	### Real-World Example
+	See: [[t.ext.data.type.workspace.thorg-dir.data.workspace_config_json]]
+	
+</note>
+<note name="t.ext.bkt.git-submodule" title="Git Submodule">
+	
+	<div class="centered">
+	
+	https://git-scm.com/book/en/v2/Git-Tools-Submodules
+	</div>
+	
+	
+	### How to add
+	![[t.ext.bkt.git-submodule.how-to-add-submodule]]
+</note>
+<note name="t.ext.bkt.git-submodule.how-to-add-submodule" title="How to Add GIT Submodule">
+	
+	### Bash command for adding submodule
+	```bash
+	    git submodule add "${submodule_url:?}" "${path_where_to_add_submodule:?}"
+	```
+	
+	Where `submodule_url` would be something like: `git@gitlab.com:your-username/personal-assets.git`  
+	And `path_where_to_add_submodule` is the local file path under parent git repository where you want the submodule to be added.
+	
+	
+	
+	### Example use cases for submodule:
+	- Manage workspace with multiple vaults
+	- Separate [[t.ext.data.type.vault]] note GIT history from image asset history.
+</note>
+<note name="t.ext.bkt.highlighted-commands" title="Thorg Highlighted Commands">
 	
 	### Commands
 	
@@ -64,13 +179,13 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	  - [[t.ext.command.search.quick.in-subtree.updated-since]] - Search with subtree filter, limited to notes that have been updated since a specified time.
 	
 	### Next: Setup Shortcuts
-	Once you have checked out the highlighted commands, look at **[[t.ext._.setup-of-shortcuts]]** to set up your shortcut schema in an **ergonomic** and quickly accessible way.
+	Once you have checked out the highlighted commands, look at **[[t.ext.bkt.setup-of-shortcuts]]** to set up your shortcut schema in an **ergonomic** and quickly accessible way.
 </note>
-<note name="t.ext._.review-script-prior-to-running-them" title="Remember to Review Scripts from Internet Prior to Running Them">
+<note name="t.ext.bkt.review-script-prior-to-running-them" title="Remember to Review Scripts from Internet Prior to Running Them">
 	
 	Remember to review scripts from internet prior to running them! 
 	
-	Whenever you encounter someone on the internet asking you to run a script like
+	Whenever you encounter some tutorial on the internet asking you to run a script like
 	
 	```bash
 	curl -fsSL https://some-script.sh | bash 
@@ -79,7 +194,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	Make sure to look at that script by going to `https://some-script.sh` in your browser and, prior to running the script (`| bash` portion is what runs the script). If you aren't a pro of the language that the script is written in, then at least ask GPT/Claude/LLM-of-your-choice to review the script for whether it is safe to run and is free of doing anything malicious. By asking LLM a question as *"Is this script safe to run from security perspective?"*
 	
 </note>
-<note name="t.ext._.setup-of-shortcuts" title="Setup of Thorg Shortcuts">
+<note name="t.ext.bkt.setup-of-shortcuts" title="Setup of Thorg Shortcuts">
 	
 	As of the Alpha release, Thorg comes **ready** for keyboard shortcuts but does NOT have pre-configured shortcuts. We assume our users' keyboards are already heavily loaded with shortcuts. Therefore, we propose adjusting existing shortcuts to use two-chord combinations, making room for an array of hot-keyed commands.
 	
@@ -106,27 +221,27 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	Now that CTRL lives on the home row and we can use `CTRL+<SomeKey>` shortcuts with ease, let's start with our first multi-chord entry point: `CTRL+t`
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-t-setup]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup]]
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-y-setup]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-y-setup]]
 	
 	<details class="bordered">
 	<summary>Quick search with updated-since, shortcut setup</summary>
 	
-	![[t.ext._.setup-of-shortcuts.updated-since-setup]]
+	![[t.ext.bkt.setup-of-shortcuts.updated-since-setup]]
 	</details>
 	
 	
 	
 	
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-t-setup" title="Thorg Ctrl+T Shortcut Setup - For Quick Search">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-t-setup" title="Thorg Ctrl+T Shortcut Setup - For Quick Search">
 	
 	
 	<details class="bordered">
 	<summary>But CTRL+t is taken for ShowAllSymbols! - Yes, let's free CTRL+t first</summary>
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-t-setup.free-ctrl-t]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.free-ctrl-t]]
 	</details>
 	
 	Now that we've freed CTRL+t from being tied to a single command, we can use it as an entry point for multiple commands.
@@ -135,15 +250,15 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	<summary>Use CTRL+t as entry point for Thorg commands</summary>
 	
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts]]
 	</details>
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts" title="Add Ctrl+T Thorg Shortcuts">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts" title="Add Ctrl+T Thorg Shortcuts">
 	
 	`CTRL+t` is used as the entry point for primary Thorg commands. Think of `CTRL+t` as meaning `Thorg` for most commands you assign under it.
 	
 	### Pre-Req
-	- [[CTRL+t has been freed|t.ext._.setup-of-shortcuts.ctrl-t-setup.free-ctrl-t]]
+	- [[CTRL+t has been freed|t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.free-ctrl-t]]
 	
 	### Add CTRL+t Thorg Shortcuts
 	Add the following to your [[keybindings.json|t.ext.vscode.how-to.change-your-keybindings-json]]:
@@ -219,11 +334,11 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	<details class="bordered-when-open">
 	<summary>Why use visited-since and not updated-since for primary shortcuts?</summary>
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since]]
 	</details>
 	
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since" title="Why use visited-since and not updated-since for primary shortcuts">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since" title="Why use visited-since and not updated-since for primary shortcuts">
 	
 	#### Why Use Visited-Since and Not Updated-Since as Primary Shortcuts?
 	
@@ -235,11 +350,11 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	
 	#### Also see
-	- [[t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since.when-updated-since-can-be-better]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since.when-updated-since-can-be-better]]
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since.when-updated-since-can-be-better" title="When Updated since Can Be Better Than Visited-Since">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since.when-updated-since-can-be-better" title="When Updated since Can Be Better Than Visited-Since">
 	
-	While for most use cases we expect visited-since commands to be the preferred time-based search filter ([[see why|t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since]]), there are times when updated-since commands such as:
+	While for most use cases we expect visited-since commands to be the preferred time-based search filter ([[see why|t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since]]), there are times when updated-since commands such as:
 	- [[t.ext.command.search.quick.updated-since]]
 	- [[t.ext.command.search.quick.in-subtree.updated-since]]
 	
@@ -251,7 +366,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	will be more useful to you.
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-t-setup.free-ctrl-t" title="Free Ctrl+T">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.free-ctrl-t" title="Free Ctrl+T">
 	
 	Out of the box, VSCode assigns `CTRL+t` to `workbench.action.showAllSymbols`. You'll need to free and remap this so you can use `CTRL+t` as an entry point for **many** commands rather than just a single command.
 	
@@ -286,29 +401,29 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	This setup will leave `CTRL+t` + `CTRL+t` available for [[t.ext.command.search.quick.all]]. 
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-y-setup" title="Ctrl+Y Shortcut Setup - For In-Subtree Searches">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-y-setup" title="Ctrl+Y Shortcut Setup - For In-Subtree Searches">
 	
 	<details class="bordered">
 	<summary>Free CTRL+y</summary>
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-y-setup.free-ctrl-y]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-y-setup.free-ctrl-y]]
 	</details>
 	
 	
 	<details class="bordered">
 	<summary>Add Thorg CTRL+y shortcuts</summary>
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-y-setup.add-ctrl-h-shortcuts]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-y-setup.add-ctrl-h-shortcuts]]
 	</details>
 	
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-y-setup.add-ctrl-h-shortcuts" title="CTRL+y Thorg Subtree Search Shortcuts">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-y-setup.add-ctrl-h-shortcuts" title="CTRL+y Thorg Subtree Search Shortcuts">
 	
 	
 	`CTRL+y` is used as the entry point for Thorg in-subtree search commands. To remember this, think of the `Y` character representing the branching of a tree.
 	
 	### Pre-Req
-	- [[t.ext._.setup-of-shortcuts.ctrl-y-setup.free-ctrl-y]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-y-setup.free-ctrl-y]]
 	
 	### Shortcuts Overview
 	
@@ -382,9 +497,9 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	  - To remember: Subtree, (Second letter of y)Ear (we used `y` for yesterday).
 	
 	## Notes
-	- These shortcuts mirror the [[ctrl+t|t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts]] shortcut pattern but scope searches to the current note's [[hierarchy|t.ext.data.type.note.hierarchy]].
+	- These shortcuts mirror the [[ctrl+t|t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts]] shortcut pattern but scope searches to the current note's [[hierarchy|t.ext.data.type.note.hierarchy]].
 </note>
-<note name="t.ext._.setup-of-shortcuts.ctrl-y-setup.free-ctrl-y" title="Free Ctrl+Y">
+<note name="t.ext.bkt.setup-of-shortcuts.ctrl-y-setup.free-ctrl-y" title="Free Ctrl+Y">
 	
 	Out of the box, VSCode assigns `CTRL+y` to `redo`. You'll need to free and remap this so you can use `CTRL+y` as an entry point for **many** commands rather than just a single command.
 	
@@ -420,16 +535,16 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	This setup will leave `CTRL+y` available as an entry point for multiple commands.
 	
 </note>
-<note name="t.ext._.setup-of-shortcuts.updated-since-setup" title="Updated-Since Command Shortcut Setup">
+<note name="t.ext.bkt.setup-of-shortcuts.updated-since-setup" title="Updated-Since Command Shortcut Setup">
 	
 	
 	
-	![[t.ext._.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since.when-updated-since-can-be-better]]
+	![[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup.add-shortcuts.why-favor-visited-since.when-updated-since-can-be-better]]
 	
-	If you have a workflow that depends on updated-since, set up shortcuts for the following commands: [[thorg.search.quick.updated-since.XXX|t.ext.command.search.quick.updated-since]] and [[thorg.search.quick.in-subtree.updated-since.XXX|t.ext.command.search.quick.in-subtree.updated-since]]. Pick an entry key and follow a pattern similar to the [[t.ext._.setup-of-shortcuts.ctrl-t-setup]] setup.
+	If you have a workflow that depends on updated-since, set up shortcuts for the following commands: [[thorg.search.quick.updated-since.XXX|t.ext.command.search.quick.updated-since]] and [[thorg.search.quick.in-subtree.updated-since.XXX|t.ext.command.search.quick.in-subtree.updated-since]]. Pick an entry key and follow a pattern similar to the [[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup]] setup.
 	
 </note>
-<note name="t.ext._.windows-how-to-increase-path-length" title="Windows How to Increase Path Length">
+<note name="t.ext.bkt.windows-how-to-increase-path-length" title="Windows How to Increase Path Length">
 	
 	## Problem
 	Windows (last I checked even Windows11) comes setup to limit the max path length to about 260 characters. Which is quite problematic if you want to have longer note names.
@@ -457,33 +572,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	```
 	
 	**REBOOT/RESTART** your computer for settings to take effect.
-</note>
-<note name="t.ext.as-context-for-llm" title="Thorg Documentation As Context for LLM">
-	
-	This **[single file](https://raw.githubusercontent.com/Thorg-App/thorg-public-notes-context-for-llm/refs/heads/main/context/all.md)** from [this](https://github.com/Thorg-App/thorg-public-notes-context-for-llm) git repo contains all notes from [notes.thorg.app](https://notes.thorg.app), ready to add as LLM context.
-	
-	#### Individual files
-	<details class="bordered-when-open">
-	<summary>Individual files in public repo</summary>
-	
-	![[t.ext.as-context-for-llm.public-repo]]
-	</details>
-	
-	### Tip:
-	- [GoogleAI Studio](https://aistudio.google.com) is free as of this writing and has large context window.
-</note>
-<note name="t.ext.as-context-for-llm.public-repo" title="Public Repo (with notes.thorg.app content)">
-	
-	<div class="centered xxlarge">
-	
-	**[thorg-public-notes](https://github.com/Thorg-App/thorg-public-notes)**
-	</div>
-	
-	**thorg-public-notes**: Repository that contains [[vault|t.ext.data.type.vault]] that is published to https://notes.thorg.app
-	Gives you externally facing Thorg markdown documentation in markdown format.
-	
-	Also note if you want to load in entire context of Thorg externally facing documentation than look at [[t.ext.as-context-for-llm]].
-	
 </note>
 <note name="t.ext.command" title="Thorg Command">
 	
@@ -577,7 +665,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	If you use a non-standard zoom level in VSCode, you may want to adjust [[t.ext.configuration.values.visualPreferences.vsc_quickPick_maxLabelLength]].
 	
-	See child notes in this hierarchy for the different quick search commands available, as well as [[t.ext._.highlighted-commands]].
+	See child notes in this hierarchy for the different quick search commands available, as well as [[t.ext.bkt.highlighted-commands]].
 </note>
 <note name="t.ext.command.search.quick._.tip" title="Quick Search Tip">
 	
@@ -599,7 +687,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	### Also see
 	#### Shortcuts
-	- [[t.ext._.setup-of-shortcuts.ctrl-t-setup]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup]]
 	
 	### Related Tips
 	![[t.ext.command.search.quick._.tip]]
@@ -641,7 +729,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	### Also see
 	#### Shortcuts
-	- [[t.ext._.setup-of-shortcuts.ctrl-y-setup]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-y-setup]]
 	
 	#### Related Tips
 	![[t.ext.command.search.quick.in-subtree._.tip]]
@@ -757,11 +845,29 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	### Also see
 	#### Shortcuts
-	- [[t.ext._.setup-of-shortcuts.ctrl-y-setup]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-y-setup]]
 	
 	#### Related Tips
 	![[t.ext.command.search.quick.in-subtree._.tip]]
 	 
+</note>
+<note name="t.ext.command.search.quick.in-vault" title="Quick search In Vault">
+	
+	![[t.ext.command.search.quick.in-vault.all]]
+</note>
+<note name="t.ext.command.search.quick.in-vault.all" title="Quick Search In Vault-All">
+	
+	#slotted-for-prioritization: This command is NOT yet available and is slottedd for prioritiztaion if you want it to come to life let us know in [[t.ext.contact-us.discord]].
+	
+	### Command ID
+	```txt
+	thorg.search.quick.in-vault.all
+	```
+	
+	### Behavior
+	Filters the search to [[notes|t.ext.data.type.note]] that are in the same [[vault|t.ext.data.type.vault]] as your currently selected note.
+	- **Includes current note** → Yes
+	- **No note selected** → Warning message
 </note>
 <note name="t.ext.command.search.quick.tip.empty query to get recently visited notes" title="Tip: Use Empty Query (' ') to get recently visited notes">
 	
@@ -804,7 +910,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	### Also see
 	#### Shortcuts
-	- [[t.ext._.setup-of-shortcuts.ctrl-t-setup]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup]]
 	
 	#### Similar commands
 	- [[t.ext.command.search.quick.in-subtree.updated-since]] - Similar to this command, but also filters to notes in the [[subtree|t.ext.data.type.note.subtree]].
@@ -840,10 +946,54 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	### Also see
 	#### Shortcuts
-	- [[t.ext._.setup-of-shortcuts.ctrl-t-setup]]
+	- [[t.ext.bkt.setup-of-shortcuts.ctrl-t-setup]]
 	
 	#### Similar commands
 	- [[t.ext.command.search.quick.in-subtree.visited-since]]
+</note>
+<note name="t.ext.command.workspace" title="Workspace">
+	
+	Commands related to workspace configuration.
+	
+</note>
+<note name="t.ext.command.workspace.initialize" title="thorg.workspace.initialize">
+	
+	Command to initialize brand new [[t.ext.data.type.workspace]].
+	
+</note>
+<note name="t.ext.command.workspace.vault" title="Vault">
+	
+	Commands related to [[t.ext.data.type.vault]] configuration in [[t.ext.data.type.workspace]].
+</note>
+<note name="t.ext.command.workspace.vault.deregister" title="thorg.workspace.vault.deregister">
+	
+	De-registers the vault from [[t.ext.data.type.workspace]] by removing the vault path from [[t.ext.data.type.workspace.thorg-dir.data.workspace_config_json]].
+	
+	**This command does NOT delete files.** It only changes the configuration so that Thorg stops processing the vault. You can add the vault back by running [[t.ext.command.workspace.vault.register]].
+	
+	
+	### Relationships
+	- [[rel.opposite-of]]:**[[t.ext.command.workspace.vault.register]]**
+</note>
+<note name="t.ext.command.workspace.vault.register" title="thorg.vault.register">
+	
+	Registers a vault to be indexed by Thorg within this [[t.ext.data.type.workspace]].
+	
+	You can either register an existing vault that was previously [[deregistered|t.ext.command.workspace.vault.deregister]], or create a new vault within this workspace.
+	
+	#### Registering a pre-existing vault
+	The vault is added to [[t.ext.data.type.workspace.thorg-dir.data.workspace_config_json]].
+	
+	#### Creating a new vault
+	This command performs the following actions to satisfy [[t.ext.data.type.vault.requirement]]:
+	
+	- Creates a new folder with your chosen name
+	- Places [[t.ext.data.type.vault.root_md]] in it, giving the vault a [[t.ext.data.type.vault.property.id]]
+	- Registers the vault in [[t.ext.data.type.workspace.thorg-dir.data.workspace_config_json]]
+	
+	
+	### Relationships
+	- [[rel.opposite-of]]:**[[t.ext.command.workspace.vault.deregister]]**
 </note>
 <note name="t.ext.concept" title="Thorg General Concept">
 	
@@ -905,6 +1055,15 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	
 	
+</note>
+<note name="t.ext.concept.markdown" title="Markdown">
+	
+	
+	Here is a [video](https://www.youtube.com/shorts/4z0l5Kl2Q6E) of what is Markdown in 60-seconds. (note we typically use `.md` instead of `.MD` mentioned in the video for extension).
+	
+	[Markdown basic syntax](https://www.markdownguide.org/basic-syntax/)
+	
+	Thorg's markdown is extended to include [[wiki-links|t.ext.data.type.note-link.type.wiki-link]] and embedded wiki links [[t.ext.data.type.note-link.example.embed]], to allow ease of reference between the notes.
 </note>
 <note name="t.ext.concept.serverPort" title="serverPort">
 	
@@ -1535,6 +1694,13 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	This **excludes** the [[t.ext.data.type.note.frontmatter]] data of the note.
 </note>
+<note name="t.ext.data.type.note.data" title="Note Data">
+	
+	**Note data** in Thorg vocabulary refers to **both combined**:
+	- [[Note Frontmatter|t.ext.data.type.note.frontmatter]]
+	- [[Note Markdown Content|t.ext.data.type.note.content]]
+	
+</note>
 <note name="t.ext.data.type.note.data.title" title="Note Title (Concept)">
 	
 	Title is envisioned to represent a very readable name for the note, to be used in visualizations and previews.
@@ -1616,13 +1782,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	</details>
 	
 	<details class="bordered-when-open">
-	<summary>desc (description)</summary>
-	
-	![[t.ext.data.type.note.frontmatter.field.desc]]
-	</details>
-	
-	
-	<details class="bordered-when-open">
 	<summary>updated</summary>
 	
 	![[t.ext.data.type.note.frontmatter.field.updated]]
@@ -1635,7 +1794,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	</details>
 	
 	
+	### Optional:
+	<details class="bordered-when-open">
+	<summary>desc (description)</summary>
 	
+	![[t.ext.data.type.note.frontmatter.field.desc]]
+	</details>
 </note>
 <note name="t.ext.data.type.note.frontmatter.field.context" title="Context field in Frontmatter">
 	
@@ -1674,7 +1838,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	---
 	```
 </note>
-<note name="t.ext.data.type.note.frontmatter.field.id" title="Note id in frontmatter">
+<note name="t.ext.data.type.note.frontmatter.field.id" title="'id' in FrontMatter">
 	
 	The ID in frontmatter is the minimum value needed to deem a markdown file as a parseable note.
 	
@@ -2085,9 +2249,27 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.data.type.vault" title="Vault">
 	
-	A vault is a **folder** located under your [[t.ext.data.type.workspace]] where you store your [[notes|t.ext.data.type.note]] and supporting assets (e.g., images).
+	![[t.ext.data.type.vault.definition]]
 	
-	To be considered a valid vault, the folder MUST contain a `root.md` file with an id. See [[t.ext.data.type.vault.id]]
+	![[t.ext.data.type.vault.requirement]]
+	
+	![[t.ext.data.type.vault.property]]
+	
+	--------
+	
+	### Relationships
+	- [[rel.many-to-many]]:**[[t.ext.data.type.workspace]]**
+	  - A vault can be part of multiple workspaces, and a workspace can have multiple vaults. See [[t.ext.data.type.workspace.pattern]]
+	
+	### Highlighted commands
+	- [[t.ext.command.workspace.vault.register]] - registers existing vault or creates and registers a new vault with [[t.ext.data.type.workspace]].
+</note>
+<note name="t.ext.data.type.vault.definition" title="Vault Definition">
+	
+	<div class="centered xlarge">
+	
+	Definition: A vault is a **folder** where you store your [[notes|t.ext.data.type.note]] and supporting assets (e.g., images).
+	</div>
 	
 	<details class="bordered-when-open">
 	<summary>Comparison with other software</summary>
@@ -2098,21 +2280,17 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	#### Unlike Obsidian Vault
 	However, [Obsidian Vault](https://help.obsidian.md/vault) is more akin to [[Thorg Workspace|t.ext.data.type.workspace]]. 
 	</details>
+</note>
+<note name="t.ext.data.type.vault.property" title="Vault Properties">
 	
-	### Vault name
-	![[t.ext.data.type.vault.name]]
+	![[t.ext.data.type.vault.property.id]]
 	
-	### Vault Id
-	![[t.ext.data.type.vault.id]]
-	
-	### Relationships
-	- [[rel.many-to-many]]:**[[t.ext.data.type.workspace]]**
-	  - A vault can be part of multiple workspaces, and a workspace can have multiple vaults.
+	![[t.ext.data.type.vault.property.name]]
 	
 </note>
-<note name="t.ext.data.type.vault.id" title="vault Id">
+<note name="t.ext.data.type.vault.property.id" title="vault Id">
 	[vault Id](thorg://notes/d0hjf6wbbrfeiriivbahumm)
-	The vault id comes from the [[t.ext.data.type.note.frontmatter.field.id]] of the `root.md` note located directly under your vault folder.
+	The vault id comes from the [[t.ext.data.type.note.frontmatter.field.id]] of the [[root.md|t.ext.data.type.vault.root_md]] note located directly under your vault folder.
 	
 	#### Example
 	```txt
@@ -2132,56 +2310,206 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	
 </note>
-<note name="t.ext.data.type.vault.name" title="Vault Name">
+<note name="t.ext.data.type.vault.property.name" title="Vault Name">
 	
 	The Thorg vault name is simply the name of the folder under your workspace.
 	
-	To keep things simple, there is no separate name configuration for the vault.
+	To keep things simple, for now there is **NO** separate name configuration for the vault.
+	
+	### Approaches
+	<details class="bordered-when-open">
+	<summary>Q: What if I have different Git repositories with the same name? A: Clone with different local names.</summary>
+	
+	#### Example:
+	Let's say you have two repositories from different users that share the same name:
+	```txt
+	git@gitlab.com:user-1/public.git
+	git@gitlab.com:user-2/public.git
+	```
+	
+	Cloning these as-is would create conflicting directory and vault names. To avoid this, assign different names when cloning:
+	```bash 
+	git clone git@gitlab.com:user-1/public.git ./user-1-public
+	git clone git@gitlab.com:user-2/public.git ./user-2-public
+	```
+	
+	This creates two separate directories and therefore two different vault names:
+	```
+	./user-1-public
+	./user-2-public
+	```
+	</details>
 </note>
-<note name="t.ext.data.type.workspace" title="Workspace">
+<note name="t.ext.data.type.vault.requirement" title="Vault Requirements">
 	
-	A workspace is a collection of one or more [[t.ext.data.type.vault]]s.
+	For a folder to be recognized as a vault for a given [[workspace|t.ext.data.type.workspace]] the following requirements must be met:
+	- Must be registered in [[t.ext.data.type.workspace.thorg-dir.data.workspace_config_json]]
+	  - Why: So that workspace is aware that we want this folder to be recognized as a vault. This is most useful if you 
+	- Must contain [[t.ext.data.type.vault.root_md]] with valid globally unique [[t.ext.data.type.note.frontmatter.field.id]]
+	  - Why: So that we can have globally unique identifier for the vault.
+</note>
+<note name="t.ext.data.type.vault.root_md" title="$VAULT/root.md">
 	
-	This is a folder containing all the files necessary to manage your information in Thorg.
+	`$VAULT/root.md` is a special type of file that contains the the metadata of the [[t.ext.data.type.vault]] in its [[t.ext.data.type.note.frontmatter]].
+	
+	To be considered a [[t.ext.data.type.vault]] vault within a [[t.ext.data.type.workspace]], the folder MUST contain a `root.md` file with an id. See [[t.ext.data.type.vault.property.id]]
+</note>
+<note name="t.ext.data.type.workspace" title="Thorg Workspace">
+	
+	A functioning workspace is a collection of one or more [[vaults|t.ext.data.type.vault]].
+	
+	In practice this is a folder containing all the files necessary to manage your information in Thorg. 
+	
+	In thorg documentation this directory will be referred to as `$THORG_WORKSPACE`.
+	
+	The suggested usage pattern is to have a single main `$THORG_WORKSPACE` that can include multiple [[vaults|t.ext.data.type.vault]]. Allowing each [[vault|t.ext.data.type.vault]] toe be independently versioned and included in differently configured workspaces.
+	
+	## Typical layout
+	Typical layout will be as follows:
+	
+	```
+	$THORG_WORKSPACE/
+	    /$VAULT_1
+	    /$VAULT_2
+	    /.thorg
+	    /other-directories and files...
+	```
+	
+	## Sub-directories
+	- In typical setup one level down will be [[vaults|t.ext.data.type.vault]], which to be recognized as vaults need to meet [[t.ext.data.type.vault.requirement]].
+	
+	## Patterns
+	![[t.ext.data.type.workspace.pattern]]
+	
 	
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir" title="Thorg Workspace Directory ($WORKSPACE/.thorg)">
+<note name="t.ext.data.type.workspace.pattern" title="Common Thorg Workspace Patterns">
+	
+	## Main patterns for [[workspaces|t.ext.data.type.workspace]]
+	### Pattern 1: Main workspace - At Home (Recommended to start with)
+	This is the recommended pattern to start with as it's the simplest to set up and preserves your Git history as you move [[notes|t.ext.data.type.note]] between [[vaults|t.ext.data.type.vault]].
+	
+	In this pattern, you have a **single** Git repository for your [[workspace|t.ext.data.type.workspace]] containing one **private** vault. This means you only have one Git repository to manage initially. You can create additional vaults under the workspace, and they'll be source controlled as well. Git history is retained as you move files between vaults, provided the vaults are part of this workspace's repository and you commit moves separately from content changes (so Git can detect file similarity).
+	
+	### Pattern 2: Main Workspace — At Home - Public Repo as Separate Vault
+	Your main `$THORG_WORKSPACE` contains a **private** [[vault|t.ext.data.type.vault]] in one Git repository (accessible only to you) and a **public** vault published as a webview in a separate Git repository. 
+	
+	- PRO: Separate repository for public vault that is ready to be shared as GIT repository.
+	- CON: Moving notes from public to private looses their edit GIT history as the repositories are separate.
+	
+	### Pattern 3: Main Workspace — At Work
+	![[t.ext.data.type.workspace.pattern.with-team-vault]]
 	
 	
-	The **Thorg workspace directory (`$WORKSPACE/.thorg`)** resides under your [[t.ext.data.type.workspace]] directory and holds **Thorg-specific files** that are typically shared by default when using shared vaults.
+	### Pattern 4: Workspace Along with code
+	![[t.ext.data.type.workspace.pattern.along-with-code]]
+	
+	## Optional Add-on Patterns (Intermediate/Advanced)
+	
+	These patterns are optional and can be combined with the setups above.
+	
+	### Add-on Pattern 1: [[t.ext.bkt.git-submodule]] for Assets
+	
+	**Why**: Keeps your main repository's Git history clean by separating out images and other assets.
+	
+	**How**: Create a separate Git repository for each vault's assets (e.g., a **private** vault would have a corresponding **private-assets** repository). Then add this repository as a submodule at `$VAULT/assets/submodule`. See [[t.ext.bkt.git-submodule.how-to-add-submodule]] for details.
+	
+	**Pros**:
+	- Keeps Git histories separate while maintaining a clear relationship between repositories
+	- Allows you to track exactly which asset commits correspond to which main repository commits
+	
+	**Cons**:
+	- Adds complexity to your workflow
+	- Requires familiarity with Git submodule commands
+</note>
+<note name="t.ext.data.type.workspace.pattern.along-with-code" title="Thorg Workspace Pattern Along with Code">
+	
+	In this pattern, your [[t.ext.data.type.workspace]] lives in the same directory as your code (most aligned with [monorepo](https://en.wikipedia.org/wiki/Monorepo) code workflow). This tightly integrates documentation notes with the repos Git history. However, Even in this case it's recommended to keep your [[vault|t.ext.data.type.vault]] as a separate git repository and to use [[t.ext.bkt.git-submodule]] for your vault. 
+	
+	Separating the vault as its own git repository while keeping the history synced up through [[t.ext.bkt.git-submodule]] makes it possible to combine the vault with other vaults in a different thorg workspace (see [[t.ext.data.type.workspace.pattern.with-team-vault]]).
+	
+</note>
+<note name="t.ext.data.type.workspace.pattern.with-team-vault" title="Thorg Workspace pattern With Team Vault">
+	
+	Your main [[t.ext.data.type.workspace]] contains two vaults:
+	
+	- A **private** [[vault|t.ext.data.type.vault]] that only you can access
+	- A **team** [[vault|t.ext.data.type.vault]] stored in a separate Git repository, synced and shared among teammates, and published as a webview for the company.
+	
+	In this pattern your workspace can also pull in multiple team vaults under your workspace if you kept separate vaults per project documentation along with code. (See [[t.ext.data.type.workspace.pattern.along-with-code]]).
+	
+	To make it easy for teammates to pull in multiple repositories that represents vaults under a single workspace you can setup [[t.ext.data.type.workspace]] to use [[t.ext.bkt.git-submodule]] for the vaults that it tracks, and expect a symlink for **private** vault (since each teammate could have their own private vault that only they can access).
+</note>
+<note name="t.ext.data.type.workspace.thorg-dir" title=".thorg Data in Thorg Workspace ($THORG_WORKSPACE/.thorg)">
+	
+	
+	The **Thorg workspace directory (`$THORG_WORKSPACE/.thorg`)** resides under your [[t.ext.data.type.workspace]] directory and holds **Thorg-specific files** that are typically shared by default when using shared vaults.
 	
 	---
 	
 	### Source Control Guidance
 	
-	We recommend tracking the `$WORKSPACE/.thorg` directory in source control **with appropriate exclusions**:
+	We recommend tracking the `$THORG_WORKSPACE/.thorg` directory in source control **with appropriate exclusions**:
 	
 	When Thorg initializes this directory, it creates the following subdirectories:
 	
 	- [[t.ext.data.type.workspace.thorg-dir.data]] - ✅ Include in source control.
 	- [[t.ext.data.type.workspace.thorg-dir.tmp]] - 🚫 Exclude from source control (Thorg will automatically add a `.gitignore` entry for this folder).
 	
-	### Thorg-related files outside of `$WORKSPACE/.thorg`
+	### Thorg-related files outside of `$THORG_WORKSPACE/.thorg`
 	Thorg stores additional files outside of the workspace/vault. See [[t.ext.file.home-thorg-dir]]
 	
 	### Related 
 	- [[t.ext.data.thorg-view-on-data.transparent-data-model]]
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.data" title=".thorg/data">
+<note name="t.ext.data.type.workspace.thorg-dir.data" title="$THORG_WORKSPACE/.thorg/data">
 	
-	`.thorg/data`
-	
-	✅ **Include in source control**.
+	`$THORG_WORKSPACE/.thorg/data` - Holds persistent metadata of for the [[thorg workspace|t.ext.data.type.workspace]] ✅ **Include in source control**.
 	
 	Contains data and metadata worth versioning.
 	
+	### Files
+	- [[t.ext.data.type.workspace.thorg-dir.data.workspace_config_json]]
 	
 	
 	
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.tmp" title="$WORKSPACE/.thorg/tmp">
+<note name="t.ext.data.type.workspace.thorg-dir.data.workspace_config_json" title="$THORG_WORKSPACE/.thorg/data/workspace_config.json">
 	
-	`$WORKSPACE/.thorg/tmp`
+	This file will contain the workspace configuration.
+	
+	Primary use-case is to have place to define which folders should be attempted to be recognized as we [[vaults|t.ext.data.type.vault]].
+	
+	### File format: JSON
+	```json
+	{
+	    "_doc_format__thorg_doc_do_not_edit": "Keys ending in __thorg_doc_do_not_edit describe their sibling key...",
+	    "_top_level__thorg_doc_do_not_edit": "Configuration of [Thorg Workspace](https://notes.thorg.app/notes/37fx82rdmgup4t2m3bdz145). Full documentation: [$THORG_WORKSPACE/.thorg/data/workspace_config.json](https://notes.thorg.app/notes/owzao3g9z470tvkvcr2aj02)",
+	
+	    "vaults": {
+	        "<relative_path_from_workspace_to_vault_in_unix_format>": {
+	            // vault config, can be empty object
+	        }
+	    },
+	    "vaults__thorg_doc_do_not_edit": "Defines [vaults](https://notes.thorg.app/notes/3l69532jaroa8rtzdquul3l) used by thorg workspace. Keys are relative paths from workspace root to vault directory."
+	}
+	```
+	
+	### Relationships
+	- [[rel.uses]]:**[[t.ext.bkt.doc-val-json-config-pattern]]**
+	
+	
+	### For Searchability
+	<details class="bordered-when-open">
+	<summary>For Searchability</summary>
+	
+	workspaceconfigjson
+	</details>
+	
+</note>
+<note name="t.ext.data.type.workspace.thorg-dir.tmp" title="$THORG_WORKSPACE/.thorg/tmp">
+	
+	`$THORG_WORKSPACE/.thorg/tmp`
 	
 	🚫 **Exclude from source control**.
 	
@@ -2195,7 +2523,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- [[t.ext.data.type.workspace.thorg-dir.tmp.logs]]
 	
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.tmp.logs" title="$WORKSPACE/.thorg/tmp/logs">
+<note name="t.ext.data.type.workspace.thorg-dir.tmp.logs" title="$THORG_WORKSPACE/.thorg/tmp/logs">
 	
 	### Description
 	Directory where the main logs for this Thorg workspace are stored.
@@ -2221,25 +2549,25 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	vsc_client.2025_11_12.log.1
 	```
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.tmp.server" title="$WORKSPACE/.thorg/tmp/server (directory for temporary server files)">
+<note name="t.ext.data.type.workspace.thorg-dir.tmp.server" title="$THORG_WORKSPACE/.thorg/tmp/server (directory for temporary server files)">
 	
 	### Children Directories
 	![[t.ext.data.type.workspace.thorg-dir.tmp.server.instance]]
 	
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance" title="$WORKSPACE/.thorg/tmp/server/instance">
+<note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance" title="$THORG_WORKSPACE/.thorg/tmp/server/instance">
 	
 	Contains files that represent the Thorg server instance for this workspace.
 	
 	Specifically:
 	- [[t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file]] - Contains the port the Thorg server is using.
 </note>
-<note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file" title="$WORKSPACE/.thorg/tmp/server/instance/server.port">
+<note name="t.ext.data.type.workspace.thorg-dir.tmp.server.instance.port-file" title="$THORG_WORKSPACE/.thorg/tmp/server/instance/server.port">
 	
 	This file holds the [[t.ext.concept.serverPort]] of the [[t.ext.thorgServer]] that is running for this [[workspace|t.ext.data.type.workspace]].
 	
 	### Location
-	Located at `$WORKSPACE/.thorg/tmp/server/instance/server.port` when a Thorg server instance is running for this workspace.
+	Located at `$THORG_WORKSPACE/.thorg/tmp/server/instance/server.port` when a Thorg server instance is running for this workspace.
 	
 	This file is deleted when the server terminates gracefully.
 	
@@ -2295,31 +2623,28 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	[[Visit history file path|t.ext.feature.visit-history.file.location]] **contains the [[note id|t.ext.data.type.note.frontmatter.field.id]]** in the file name. Therefore, we do NOT need to duplicate the note id in the events that we store.
 	
+	The contents of the visit history file are in compact **text** format with the following structure per line:
 	
-	The contents of the visit histroy file are in compact **text** format with the following structure per line:
-	
-	### Line Structure
+	### Line Structure (VisitPair format)
 	
 	```txt
-	<ACTION_TYPE>:<TIMESTAMP_SINCE_EPOCH_IN_MILLIS>
+	<FOCUS_TIMESTAMP_MILLIS>:<DURATION_MILLIS>
 	```
 	
-	- **ACTION_TYPE**: Has 2 possible values:
-	  - `F` - [[t.ext.feature.visit-history.visit-event.FOCUS]] event
-	  - `U` - [[t.ext.feature.visit-history.visit-event.UNFOCUS]] event (when you leave the note)
+	- **FOCUS_TIMESTAMP_MILLIS**: When the [[t.ext.feature.visit-history.visit-event.FOCUS]] event occurred (milliseconds since epoch).
+	- **DURATION_MILLIS**: How long the visit lasted (milliseconds).
 	
-	- **TIMESTAMP_SINCE_EPOCH_IN_MILLIS**: The timestamp when the event occurred, in milliseconds since epoch.
+	Each line represents a **complete visit** (a FOCUS followed by UNFOCUS).
 	
 	### Example content
 	```txt
-	F:1753911954503
-	U:1753911959100
+	1753911954503:4597
+	1753912000000:60000
 	```
 	
 	This translates to:
-	- `F:1753911954503`: Note was focused at timestamp [1753911954503]
-	- `U:1753911959100`: Note lost focus at timestamp [1753911959100]
-	
+	- `1753911954503:4597`: Visit started at timestamp [1753911954503], lasted [4597] ms (~4.6 seconds)
+	- `1753912000000:60000`: Visit started at timestamp [1753912000000], lasted [60000] ms (1 minute)
 	
 	### Stored transparently
 	Per [[t.ext.data.thorg-view-on-data.transparent-data-model]], we use a human-readable format to store data in a transparent (non-proprietary) way. We opted away from JSONL to keep files compact while retaining human readability and ease of parsing, so you can see what is being recorded and parse it if you desire.
@@ -2331,23 +2656,23 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	If you're parsing this data, you can future-proof your implementation by expecting additional fields to be added after the current ones, separated by the `:` delimiter.
 	
-	In future versions, we may extend the data recorded per event:
+	In future versions, we may extend the data recorded per visit:
 	
 	```txt
-	F:1753911954503:<some-new-data>:<additional-field>
+	1753911954503:4597:<some-new-data>:<additional-field>
 	```
 	
 	**Simple future-proofing strategy:**
 	1. Take one line
 	2. Split on `:` delimiter to get tokens
-	3. Read `tokens[0]` (action type) and `tokens[1]` (timestamp)
+	3. Read `tokens[0]` (focus timestamp) and `tokens[1]` (duration)
 	4. Ignore any additional tokens beyond index 1
 	
 	This ensures your parser continues working even as new fields are added.
 	</details>
 </note>
 <note name="t.ext.feature.visit-history.file.location" title="Visit History file Location - (Where visit history data is written to)">
-	 
+	
 	### Location
 	```txt
 	$HOME/
@@ -2356,7 +2681,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	      {user_name}/
 	        qc/
 	         h/
-	            v/
+	            vh/
 	              vid_{vault_id}/
 	                {machine_name}/
 	                  nid_{note-id}.visit_log
@@ -2368,12 +2693,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- `{user_name}/` - [[t.ext.concept.thorgUsername]]
 	- `qc/` - Stands for *quick changing*.
 	- `h/` - Folder stands for *history*.
-	- `v/` - Folder stands for *visit*.
-	- `vid_{vault_id}/` - [[t.ext.data.type.vault.id]]
+	- `vh/` - Folder stands for *visit history*.
+	- `vid_{vault_id}/` - [[t.ext.data.type.vault.property.id]]
 	- `{machine_name}/` - [[t.ext.concept.machineName]]
 	  - Machine name exists to prevent merge conflicts when you share your visit history for the same user across multiple machines.
 	- `nid_{note-id}.visit_log` - Visit log for the [[t.ext.data.type.note]], indexed by [[note_id|t.ext.data.type.note.frontmatter.field.id]].
-	  - By including the note id in the file name, we avoid storing the note id within the events themselves (see [[t.ext.feature.visit-history.file.content-format]]).
+	  - By including the note id in the file name, we avoid storing the note id within the visits themselves (see [[t.ext.feature.visit-history.file.content-format]]).
 	
 	### Recommendation
 	![[t.ext.file.home-thorg-dir._.banner-for-descendent-dirs-to-be-backed-up]]
@@ -2744,7 +3069,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 <note name="t.ext.guide.getting-started.from-dendron.callout.vault-name-is-not-read-from-dendron-yaml" title="Vault Name Is Not Read from Dendron Yaml">
 	
 	
-	Vault names are **now derived solely from the vault's folder name** and are **no longer** read from `dendron.yml`. (See [[t.ext.data.type.vault.name]])
+	Vault names are **now derived solely from the vault's folder name** and are **no longer** read from `dendron.yml`. (See [[t.ext.data.type.vault.property.name]])
 	
 	Most users won't be affected by this change, as vault names usually already match their corresponding folder names. However, if the `name` property in your `dendron.yml` configuration doesn't match your vault's folder name, an adjustment is needed for smooth operation with Thorg.
 	
@@ -2886,10 +3211,14 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
 	
-	Latest Thorg release in S3: **[Thorg VSIX v0.5.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.5.0.vsix)**
+	Latest Thorg release in S3: **[Thorg VSIX v0.7.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.7.0.vsix)**
 	
 </note>
 <note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
+	
+	- [Thorg VSIX v0.7.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.7.0.vsix)
+	
+	- [Thorg VSIX v0.6.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.6.0.vsix)
 	
 	- [Thorg VSIX v0.5.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.5.0.vsix)
 	
@@ -2916,7 +3245,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	And make sure to checkout highlighted commands:
 	
-	![[t.ext._.highlighted-commands]]
+	![[t.ext.bkt.highlighted-commands]]
 	
 	
 </note>
@@ -3559,7 +3888,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	curl -fsSL https://raw.githubusercontent.com/Thorg-App/script/refs/heads/main/troubleshoot/linux/inotify/inotify_double_current_limits.sh | bash 
 	```
 	
-	Also: [[t.ext._.review-script-prior-to-running-them]]
+	While above script is coming from our repository. Still [[t.ext.bkt.review-script-prior-to-running-them]] especially as the above script will require `sudo` access to run to be able to modify your system settings.
 	
 </note>
 <note name="t.ext.troubleshooting.linux.inotify.max_user_watches-memory-usage" title="inotify.max_user_watches Memory Usage">
@@ -3645,7 +3974,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	fs.inotify.max_queued_events = 16384
 	```
 	
-	If you want to get the actual limits used, that is not as straightforward and requires some scripting. You can see some options [here](https://unix.stackexchange.com/a/502359/364768), (Also remember [[t.ext._.review-script-prior-to-running-them]])
+	If you want to get the actual limits used, that is not as straightforward and requires some scripting. You can see some options [here](https://unix.stackexchange.com/a/502359/364768), (Also remember [[t.ext.bkt.review-script-prior-to-running-them]])
 </note>
 <note name="t.ext.vscode.how-to.change-your-keybindings-json" title="How to Change Your keybindings.json">
 	
