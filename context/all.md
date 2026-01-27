@@ -2681,10 +2681,10 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	      {user_name}/
 	        qc/
 	         h/
-	            vh/
-	              vid_{vault_id}/
+	            vh2/
+	              vaultid_{vault_id}/
 	                {machine_name}/
-	                  nid_{note-id}.visit_log
+	                  {note-id}.note_visit_log
 	```
 	
 	- `$HOME/` - Your user directory.
@@ -2693,11 +2693,11 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- `{user_name}/` - [[t.ext.concept.thorgUsername]]
 	- `qc/` - Stands for *quick changing*.
 	- `h/` - Folder stands for *history*.
-	- `vh/` - Folder stands for *visit history*.
-	- `vid_{vault_id}/` - [[t.ext.data.type.vault.property.id]]
+	- `vh2/` - Folder stands for *visit history v2*.
+	- `vaultid_{vault_id}/` - [[t.ext.data.type.vault.property.id]]
 	- `{machine_name}/` - [[t.ext.concept.machineName]]
 	  - Machine name exists to prevent merge conflicts when you share your visit history for the same user across multiple machines.
-	- `nid_{note-id}.visit_log` - Visit log for the [[t.ext.data.type.note]], indexed by [[note_id|t.ext.data.type.note.frontmatter.field.id]].
+	- `{note-id}.note_visit_log` - Visit log for the [[t.ext.data.type.note]], indexed by [[note_id|t.ext.data.type.note.frontmatter.field.id]].
 	  - By including the note id in the file name, we avoid storing the note id within the visits themselves (see [[t.ext.feature.visit-history.file.content-format]]).
 	
 	### Recommendation
@@ -3211,10 +3211,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
 	
-	Latest Thorg release in S3: **[Thorg VSIX v0.7.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.7.0.vsix)**
+	Latest Thorg release in S3: **[Thorg VSIX v0.8.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.8.0.vsix)**
 	
 </note>
 <note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
+	
+	- [Thorg VSIX v0.8.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.8.0.vsix)
 	
 	- [Thorg VSIX v0.7.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.7.0.vsix)
 	
