@@ -38,6 +38,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	## Thorg's view on Data
 	![[t.ext.data.thorg-view-on-data]]
+	
 </note>
 <note name="t.ext" title="Thorg External Hierarchy">
 	
@@ -573,6 +574,24 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	**REBOOT/RESTART** your computer for settings to take effect.
 </note>
+<note name="t.ext.bkt.zen-mode" title="Zen Mode">
+	
+	Zen Mode: Hides all the sidebars and panels in VSCode for a distraction-free writing experience.
+	
+	
+</note>
+<note name="t.ext.bkt.zen-mode.configure-zen-mode-to-not-use-space-for-tabs" title="Configure Zen Mode to Not Use Space for Tabs">
+	
+	![[t.ext.configuration.how-to-change-thorg-configuration.open-vscode-settings-in-UI]]
+	
+	**In Settings**:
+	- search for `zenmode`
+	- Configure the settings to look like following. Key part is `Hide Status Bar`
+	
+	![](./assets/submodule/images/Screenshot From 2026-02-03 16-54-05.png){}
+	
+	After doing this the real estate can be given fully to the editors/or Thorg UI. When you enter [[t.ext.bkt.zen-mode]].
+</note>
 <note name="t.ext.command" title="Thorg Command">
 	
 	This hierarchy contains all VSCode commands that Thorg exposes.
@@ -790,6 +809,8 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- Notes in the [[subtree|t.ext.data.type.note.subtree]] of the current note
 	- Notes updated since a specified time
 	
+	![[t.ext.data.type.note.updated]]
+	
 	
 	### Command IDs
 	```txt
@@ -886,6 +907,8 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 <note name="t.ext.command.search.quick.updated-since" title="Quick Search, Updated Since">
 	
 	[[Searches|t.ext.command.search._.search-definition]] across notes filtered to those updated within specific time ranges (varies by command).
+	
+	![[t.ext.data.type.note.updated]]
 	
 	### Command IDs
 	```txt
@@ -1095,9 +1118,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	Thorg configuration/settings are changed through VSCode settings.
 	
 	### Open Settings
-	- Open Command Palette ([[t.ext.vscode.how-to.open-command-palette]])
-	- In the Command Palette, search for `Preferences: Open Settings (UI)`
-	- Press Enter
+	![[t.ext.configuration.how-to-change-thorg-configuration.open-vscode-settings-in-UI]]
 	
 	### Filter for Thorg Settings
 	In the Settings search box, type `thorg` to filter for Thorg settings.
@@ -1144,6 +1165,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	![[t.ext.thorgServer.how-to.restart]]
 	
 	
+</note>
+<note name="t.ext.configuration.how-to-change-thorg-configuration.open-vscode-settings-in-UI" title="open-vscode-settings-in-UI">
+	
+	- Open Command Palette ([[t.ext.vscode.how-to.open-command-palette]])
+	- In the Command Palette, search for `Preferences: Open Settings (UI)`
+	- Press Enter
 </note>
 <note name="t.ext.configuration.settings" title="Thorg Configuration/Settings">
 	
@@ -1339,7 +1366,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	<div class="centered xxlarge">
 	
-	**-->>[Submit Issue for VSCode Thorg Extension](https://github.com/Thorg-App/issues-thorg-vscode/issues/new/choose)<<--**
+	**-->>[Submit Issue for VSCode Thorg Extension](https://github.com/Thorg-App/thorg-root-public/issues/new/choose)<<--**
 	</div>
 	
 	If you have a reproducible issue, we would greatly appreciate it if you could send us logs along with the issue. See [[t.ext.contact-us.submit-git-hub-issue.how-to.submit-logs]].
@@ -1352,17 +1379,11 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	See child notes for specific highlighted known issues.
 </note>
-<note name="t.ext.contact-us.submit-git-hub-issue.highlighted-known-issue.no-windows-support-yet" title="Thorg does NOT support Windows Yet, Vote here for Windows Support ✅">
-	
-	**[Vote here for: Feature Add support for windows. · Issue-1 · Thorg-App/issues-thorg-vscode](https://github.com/Thorg-App/issues-thorg-vscode/issues/1)**
-	
-	Windows support is here with V0.5.0
-</note>
 <note name="t.ext.contact-us.submit-git-hub-issue.how-to" title="How To">
 	
 	How-to guides related to issue submission.
 	
-	Reminder: If you're submitting an issue for the VSCode extension, the link is [here](https://github.com/Thorg-App/issues-thorg-vscode/issues/new/choose).
+	Reminder: If you're submitting an issue for the VSCode extension, the link is [here](https://github.com/Thorg-App/thorg-root-public/issues/new/choose).
 </note>
 <note name="t.ext.contact-us.submit-git-hub-issue.how-to.submit-logs" title="How to Submit Logs">
 	
@@ -1385,7 +1406,7 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	#### 2) Share Your Logs by Sending Us an Email
 	Email the logs (as an attachment) to [[t.ext.contact-us.email]] with the subject line: 
 	
-	> LOGS for https://github.com/Thorg-App/issues-thorg-vscode/issues/<YOUR_ISSUE_NUMBER>
+	> LOGS for https://github.com/Thorg-App/thorg-root-public/issues/<YOUR_ISSUE_NUMBER>
 	
 	### Log deletion
 	Your logs will only be used to diagnose the issue you've reported and we (Thorg) will **completely** delete your logs in a timely manner.
@@ -1501,14 +1522,29 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.data.type.note-link.example.embed" title="Embed">
 	
-	You have a note file `some.note-1.md`
+	## Transclusion (Embedding Notes)
 	
-	#### Transcluded/Embedded note
-	To transclude/embed its content into your note, use its name with embed syntax: 
+	Transclusion lets you pull the content of one note directly into another. Instead of just linking to a note, the referenced note's content appears inline—as if you'd copy-pasted it, but it stays in sync with the source.
 	
+	### Example
+	
+	Say you have a note called `some.note-1.md` with useful content you want to reuse.
+	
+	To embed it in another note, use the `![[...]]` syntax:
 	```md
 	![[some.note-1]]
 	```
+	
+	When you view the note, the full content of `some.note-1` will appear right there.
+	
+	### Linking vs. Transclusion
+	
+	| Syntax | What it does |
+	|--------|--------------|
+	| `[[some.note-1]]` | Creates a link to the note (click to navigate) |
+	| `![[some.note-1]]` | Embeds the note's content inline |
+	
+	Think of the `!` as "inject this here."
 </note>
 <note name="t.ext.data.type.note-link.example.fully-qualified-link" title="Fully Qualified Link">
 	
@@ -1753,7 +1789,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	title: "Note title"
 	desc: ''
 	updated: 1685861421330
-	created: 1685861421330
 	---
 	Above this line is the frontmatter. This line and below is the markdown content.
 	```
@@ -1774,27 +1809,13 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	![[t.ext.data.type.note.frontmatter.field.id]]
 	</details>
 	
-	### For now required as well:
+	### Optional:
 	<details class="bordered-when-open">
 	<summary>title</summary>
 	
 	![[t.ext.data.type.note.frontmatter.field.title]]
 	</details>
 	
-	<details class="bordered-when-open">
-	<summary>updated</summary>
-	
-	![[t.ext.data.type.note.frontmatter.field.updated]]
-	</details>
-	
-	<details class="bordered-when-open">
-	<summary>created</summary>
-	
-	![[t.ext.data.type.note.frontmatter.field.created]]
-	</details>
-	
-	
-	### Optional:
 	<details class="bordered-when-open">
 	<summary>desc (description)</summary>
 	
@@ -1816,17 +1837,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	```
 	
 	Context gathering will be used largely to feed LLMs with data.
-</note>
-<note name="t.ext.data.type.note.frontmatter.field.created" title="created timestamp in frontmatter">
-	
-	`created` - timestamp in milliseconds since the Unix epoch, when the note was created.
-	
-	### Example:
-	```yaml
-	---
-	created: 1743465475934
-	---
-	```
 </note>
 <note name="t.ext.data.type.note.frontmatter.field.desc" title="Desc">
 	
@@ -1867,6 +1877,8 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	The frontmatter note title is stored within the FrontMatter of a note and is used to set a particular value for [[t.ext.data.type.note.data.title]].
 	
+	**Optional field**: When not set, the title is inferred from the note name (last segment, with `-` replaced by spaces and title-cased).
+	
 	An example note title set in frontmatter:
 	
 	```yml
@@ -1880,17 +1892,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	## Notes
 	Not to be confused with [[t.ext.data.type.note.name]]
-</note>
-<note name="t.ext.data.type.note.frontmatter.field.updated" title="updated timestamp in frontmatter">
-	
-	`updated` - timestamp in milliseconds since the Unix epoch, when the note was last updated.
-	
-	### Example:
-	```yaml
-	---
-	updated: 1743465432741
-	---
-	```
 </note>
 <note name="t.ext.data.type.note.frontmatter.note-must-have-a-valid-frontmatter" title="Note Must Have a Valid Frontmatter">
 	
@@ -1906,7 +1907,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	title: Note Must Have a Valid Frontmatter
 	desc: ''
 	updated: 1685861421330
-	created: 1685861421330
 	---
 	```
 	
@@ -1920,7 +1920,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	---
 	...
 	updated: 1685895360737
-	created: 1685895360737
 	---
 	```
 	
@@ -1955,13 +1954,12 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	FrontMatter must have the required date fields.
 	
-	At the time of this writing, the following dates are required:
+	At the time of this writing, the following date is required:
 	
 	```yaml
 	---
 	...
 	updated: 1685864809617
-	created: 1685864781451
 	---
 	```
 	
@@ -2210,16 +2208,15 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 </note>
 <note name="t.ext.data.type.note.updated" title="updated">
 	
-	Front-matter stored value that is used by the app to determine when the note was updated.
+	The note's `updated` timestamp is derived from the OS filesystem modification time (mtime).
 	
-	```yml
-	---
-	updated: 1724977062712
-	...
-	---
-	```
+	This approach simplifies note management while providing accurate modification tracking. When you save changes to a note file, the OS automatically updates the file's modification time.
 	
-	You may ask yourself: the file has an update timestamp in its metadata, so why do we need this? The main use case is to differentiate between refactoring updates and actual note updates. For example, a note can contain a link to a different note that gets renamed. In such cases, the file metadata update date would be increased, but we would want to keep the `updated` date as it was. 
+	### Git Considerations
+	
+	When checking out files from git, all files may have their modification time set to the checkout time (not their original modification time). To preserve accurate update timestamps, consider using a tool to restore modification times.
+	
+	![[t.ext.tip.git.restore-modification-time-mtime]]
 	
 </note>
 <note name="t.ext.data.type.note.visited" title="Note.visited">
@@ -2817,6 +2814,13 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- **Prolonged user inaction:**
 	  - If you focus on a [[note|t.ext.data.type.note]] editor and then leave it without any actions (not scrolling or changing cursor position) for a period longer than [[t.ext.configuration.values.visitHistory.autoUnfocusTtlSeconds]], we will [[auto-unfocus|t.ext.feature.visit-history.visit-event.UNFOCUS.auto-unfocus-due-to-ttl]].
 </note>
+<note name="t.ext.feature.wiki-auto-complete-provider" title="Wiki Auto Complete Provider">
+	
+	When you use `[[` Thorg will search for notes favoring recently visited notes (utilizing [[t.ext.feature.visit-history]])
+	
+	And allow you to auto complete.
+	
+</note>
 <note name="t.ext.file" title="File">
 	
 	Hierarchy for documenting specific files stored by Thorg.
@@ -3180,27 +3184,39 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- Why: We run a JVM service [[t.ext.thorgServer]] to power Thorg's functionality. This enables more advanced search filtering commands like [[t.ext.command.search.quick.in-subtree.visited-since]].
 	- By default, Thorg server starts with 1GB allocated to Java max heap space. You can lower this in the configuration (see [[t.ext.configuration.values.startupSetup.serverMaxHeapSpaceMB]]).
 	  - Note: We have successfully run a 10,000 note test workspace (with 80MB of notes) with only 512MB max heap allocated.
-	  - Also note that while the default max heap space is set to 1GB, this does not mean JVM/ThorgServer will use the full 1GB—it can operate with much less RAM.
+	  - Also note that while the default max heap space is set to 1GB, this does not mean JVM/ThorgServer will use the full 1GB--it can operate with much less RAM.
 	</details>
 	
 	
 	### Installation steps
-	- Download the [[latest|t.ext.how-to.install-thorg.latest-release]] Thorg release (Or if required due to an issue see: [[t.ext.how-to.install-thorg.previous-releases]])
-	![[t.ext.how-to.install-thorg.latest-release]]
 	
-	- Then follow the steps on [[t.ext.how-to.install-thorg.how-to-install-VSIX-file]]
+	Install Thorg directly from the VS Code Marketplace:
 	
+	1. Open VS Code
+	2. Go to Extensions (Ctrl+Shift+X / Cmd+Shift+X)
+	3. Search for "Thorg"
+	4. Click Install
+	
+	Or install via CLI:
+	```bash
+	code --install-extension thorgapp.thorg-vscode
+	```
+	
+	Or visit: [Thorg on VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=thorgapp.thorg-vscode)
+	
+	For manual VSIX installation (advanced), see [[t.ext.how-to.install-thorg.how-to-install-VSIX-file]].
+	
+	Previous S3 releases (archive): [[t.ext.how-to.install-thorg.previous-releases]]
 	
 </note>
 <note name="t.ext.how-to.install-thorg.how-to-install-VSIX-file" title="How to install VSIX file as VSCode Plugin">
 	
-	There are two ways to install the VSIX file that you downloaded as part of [[t.ext.how-to.install-thorg]]
+	> **Note:** Most users should install Thorg directly from the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=thorgapp.thorg-vscode). These instructions are for manual VSIX installation (e.g., from [[t.ext.how-to.install-thorg.previous-releases]]).
 	
 	### Using UI
 	![](./assets/submodule/for_external/Screenshot-2025_11_26T13_23_13.png){max-width: 500px, display: block, margin: 0 auto, border: 5px solid black}
 	
-	Then choose the VSIX file that you downloaded as part of [[t.ext.how-to.install-thorg]].
-	
+	Then choose the VSIX file.
 	
 	### Using CLI
 	```bash
@@ -3208,26 +3224,23 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	```
 	
 	[Reference: VSCode documentation](https://code.visualstudio.com/docs/editor/extension-marketplace#_install-from-a-vsix)
+	
 </note>
 <note name="t.ext.how-to.install-thorg.latest-release" title="Latest Thorg Release">
 	
-	Latest Thorg release in S3: **[Thorg VSIX v0.8.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.8.0.vsix)**
+	Thorg is now available on the VS Code Marketplace: **[Thorg on VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=thorgapp.thorg-vscode)**
 	
 </note>
-<note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases">
+<note name="t.ext.how-to.install-thorg.previous-releases" title="Previous Thorg Releases (Archive)">
+	
+	> **Note:** Thorg is now available on the [VS Code Marketplace](https://marketplace.visualstudio.com/items?itemName=thorgapp.thorg-vscode). The links below are archived S3 releases for reference.
 	
 	- [Thorg VSIX v0.8.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.8.0.vsix)
-	
 	- [Thorg VSIX v0.7.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.7.0.vsix)
-	
 	- [Thorg VSIX v0.6.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.6.0.vsix)
-	
 	- [Thorg VSIX v0.5.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.5.0.vsix)
-	
 	- [Thorg VSIX v0.3.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.3.0.vsix)
-	
 	- [Thorg VSIX v0.2.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.2.0.vsix)
-	
 	- [Thorg VSIX v0.1.0](https://thorg-public-releases.s3.us-west-1.amazonaws.com/vsix/thorg-vscode-0.1.0.vsix)
 	
 </note>
@@ -3344,8 +3357,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	2. Note C (most recent visit out of B, C)
 	3. Note B
 	4. Note D (most recent visit but low match score)
-	
-	
 	
 	
 	
@@ -3502,11 +3513,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	<div class="bordered">
 	
-	<div class="centered">
-	
-	[[t.ext.contact-us.submit-git-hub-issue.highlighted-known-issue.no-windows-support-yet]]
-	</div>
-	
 	1.  **Open Command Prompt or PowerShell:**
 	    *   Search for "cmd" or "PowerShell" in the Windows search bar and open the application
 	
@@ -3552,6 +3558,56 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	
 	See child notes for specific topics.
 </note>
+<note name="t.ext.tip.git.restore-modification-time-mtime" title="Restoring File Modification Times After Git Checkout">
+	
+	When files are checked out from git, their modification time (mtime) is set to the checkout time rather than their original modification time. This affects features that rely on file modification times, such as "updated since" search filters.
+	
+	### Solution: git-restore-mtime
+	
+	The `git-restore-mtime` tool restores file modification times based on git commit history.
+	
+	### Installation
+	
+	```bash
+	# Ubuntu/Debian
+	sudo apt install git-restore-mtime
+	
+	# macOS (via Homebrew)
+	brew install git-restore-mtime
+	
+	# pip (cross-platform)
+	pip install git-restore-mtime
+	```
+	
+	### Usage
+	
+	After checking out a repository or branch:
+	
+	```bash
+	git restore-mtime
+	```
+	
+	### Example: Bash Function
+	
+	```bash
+	git.restore_modification_mtime () {
+	    echo.func "${@}";
+	    local dir="${1:-${PWD:?}}";
+	    git -C ${dir:?} restore-mtime || {
+	        echo.yellow "Failed to restore modification time.";
+	        return 1
+	    }
+	}
+	```
+	
+	### When to Use
+	
+	- After `git clone`
+	- After `git checkout` (switching branches)
+	- After `git pull` (if files were modified)
+	- Before using Thorg's "updated since" search filters
+	
+</note>
 <note name="t.ext.tip.keyboard.get-rid-of-caps-lock" title="Get Rid of Caps Lock - And Remap it to CTRL">
 	
 	TLDR: Remap `CAPS LOCK` to act as `CTRL`.
@@ -3568,7 +3624,6 @@ Example [[grandparent.parent.child]] is a child of [[grandparent.parent]] which 
 	- [Mac - Change the behavior of the modifier keys](https://support.apple.com/zh-sg/guide/mac-help/mchlp1011/mac)
 	- Linux: Ask Claude/GPT how to do it for your distribution.
 	- [Windows - Using PowerToys](https://superuser.com/a/1554452/1077967)
-	  - NOTE: [[⚠️Thorg does NOT support Windows Yet⚠️|t.ext.contact-us.submit-git-hub-issue.highlighted-known-issue.no-windows-support-yet]]
 </note>
 <note name="t.ext.tip.llm-integ-use-gitingest" title="Llm Integ Use Gitingest">
 	
